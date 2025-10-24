@@ -6,9 +6,6 @@
     <title>ArduLite Documentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
     <style>
         .language-switch {
             transition: all 0.3s ease;
@@ -28,27 +25,13 @@
             opacity: 1;
         }
         .code-block {
-            border-radius: 8px;
-            margin: 16px 0;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .code-header {
-            background-color: #2d3748;
-            color: #e2e8f0;
-            padding: 8px 16px;
-            font-size: 0.875rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .code-content {
+            background-color: #f7f7f7;
+            border-radius: 6px;
             padding: 16px;
+            font-family: 'Courier New', monospace;
+            margin: 12px 0;
             overflow-x: auto;
-            font-family: 'Fira Code', monospace;
-        }
-        .dark .code-header {
-            background-color: #1a202c;
+            border-left: 4px solid #3b82f6;
         }
         .comparison-table {
             width: 100%;
@@ -64,52 +47,31 @@
             background-color: #f8fafc;
             font-weight: 600;
         }
-        .dark .comparison-table th, .dark .comparison-table td {
-            border-color: #4a5568;
-        }
-        .dark .comparison-table th {
-            background-color: #2d3748;
-        }
-        .dark {
-            color: #e2e8f0;
-        }
-        .toggle-checkbox:checked {
-            right: 0;
-            border-color: #68d391;
-        }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #68d391;
+        .feature-icon {
+            background-color: #f0f9ff;
+            border-radius: 8px;
+            padding: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 font-sans antialiased transition-colors duration-300">
+<body class="bg-gray-50 font-sans antialiased">
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
-        <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10 transition-colors duration-300">
+        <header class="bg-white shadow-sm sticky top-0 z-10">
             <div class="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-microchip text-blue-500 text-2xl"></i>
-                    <h1 class="text-xl font-semibold text-gray-800 dark:text-white">ArduLite Documentation</h1>
+                    <h1 class="text-xl font-semibold text-gray-800">ArduLite Documentation</h1>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <!-- Dark Mode Toggle -->
-                    <div class="flex items-center">
-                        <span class="mr-2 text-sm text-gray-700 dark:text-gray-300">
-                            <i class="fas fa-sun"></i>
-                        </span>
-                        <div class="relative inline-block w-10 mr-2 align-middle select-none">
-                            <input type="checkbox" name="toggle" id="dark-mode-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300" />
-                            <label for="dark-mode-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer transition-all duration-300"></label>
-                        </div>
-                        <span class="text-sm text-gray-700 dark:text-gray-300">
-                            <i class="fas fa-moon"></i>
-                        </span>
-                    </div>
-                    
                     <button id="lang-indo" class="language-switch px-3 py-1 rounded-full bg-blue-500 text-white text-sm font-medium">
                         ID
                     </button>
-                    <button id="lang-eng" class="language-switch px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium">
+                    <button id="lang-eng" class="language-switch px-3 py-1 rounded-full bg-gray-200 text-gray-700 text-sm font-medium">
                         EN
                     </button>
                 </div>
@@ -121,196 +83,306 @@
             <!-- Indonesian Content (Default) -->
             <div id="content-indo" class="content-section visible-content">
                 <div class="max-w-3xl mx-auto">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-6 transition-colors duration-300">
-                        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">ArduLite</h2>
-                        <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">🎨 ArduLite - Arduino Versi Lite ⚡️</p>
-                        <p class="text-gray-600 dark:text-gray-300">Library/framework ringan untuk C++ yang dirancang khusus untuk board Arduino dengan memori terbatas.</p>
+                    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">ArduLite</h2>
+                        <p class="text-lg text-gray-600 mb-4">🎨 ArduLite - Arduino Versi Lite ⚡️</p>
+                        <p class="text-gray-600">Library/framework ringan untuk C++ yang dirancang khusus untuk board Arduino dengan memori terbatas.</p>
                     </div>
 
                     <div class="space-y-6">
-                        <!-- Section 1 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 1: Overview -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-lg p-3 transition-colors duration-300">
+                                    <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3">
                                         <i class="fas fa-info-circle text-blue-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">Tentang ArduLite</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">ArduLite adalah library/framework ringan untuk C++ yang dirancang khusus untuk board Arduino dengan memori terbatas.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">Overview</h3>
+                                        <p class="mt-1 text-gray-600">ArduLite adalah library ringan yang dirancang untuk menyediakan fungsionalitas penting untuk Arduino dengan footprint minimal.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
-                                <p class="text-gray-700 dark:text-gray-300 mb-3">Board yang didukung:</p>
-                                <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
+                                <p class="text-gray-700 mb-3">ArduLite sangat ideal untuk proyek dengan sumber daya terbatas di mana efisiensi dan kesederhanaan sangat penting.</p>
+                                <p class="text-gray-700">Board yang didukung:</p>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
                                     <li>Arduino Uno</li>
                                     <li>Arduino Nano</li>
                                     <li>Board berbasis ATMega8</li>
                                 </ul>
-                                <p class="text-gray-700 dark:text-gray-300 mt-4">Tujuan utama dari ArduLite adalah menghemat penggunaan memori dibandingkan dengan framework Arduino standar, sehingga memungkinkan aplikasi berjalan lebih efisien di perangkat dengan sumber daya terbatas.</p>
+                                <p class="text-gray-700 mt-4">Tujuan utama dari ArduLite adalah menghemat penggunaan memori dibandingkan dengan framework Arduino standar, sehingga memungkinkan aplikasi berjalan lebih efisien di perangkat dengan sumber daya terbatas.</p>
                             </div>
                         </div>
 
-                        <!-- Section 2 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 2: Features -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-purple-100 dark:bg-purple-900 rounded-lg p-3 transition-colors duration-300">
+                                    <div class="flex-shrink-0 bg-purple-100 rounded-lg p-3">
                                         <i class="fas fa-star text-purple-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">Mengapa ArduLite?</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">Keunggulan menggunakan ArduLite untuk proyek Arduino Anda.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">Fitur ArduLite</h3>
+                                        <p class="mt-1 text-gray-600">Berbagai fitur yang tersedia di ArduLite.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-microchip text-blue-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">Penanganan Pin Digital & Analog</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Kontrol mudah untuk pin digital dan analog dengan sintaks yang disederhanakan.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-wave-square text-green-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">Dukungan PWM</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Kontrol perangkat dengan modulasi lebar pulsa (PWM) untuk berbagai aplikasi.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-code text-yellow-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">Sintaks yang Disederhanakan</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Sintaks yang mudah dipahami dan digunakan, cocok untuk pemula maupun ahli.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-memory text-red-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">Optimasi Penggunaan Memori</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Dioptimalkan untuk penggunaan memori minimal, cocok untuk perangkat dengan memori terbatas.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Why ArduLite? -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                            <div class="p-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-green-100 rounded-lg p-3">
+                                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-medium text-gray-800">Mengapa ArduLite?</h3>
+                                        <p class="mt-1 text-gray-600">Keunggulan menggunakan ArduLite untuk proyek Arduino Anda.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
                                 <ul class="space-y-3">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700 dark:text-gray-300"><strong>Lebih Hemat Memori</strong> - Program "blink" standar pada Arduino memakan 924 bytes, sementara dengan ArduLite hanya 190 bytes saja!</span>
+                                        <span class="text-gray-700"><strong>Lebih Hemat Memori</strong> - Program "blink" standar pada Arduino memakan 924 bytes, sementara dengan ArduLite hanya 190 bytes saja!</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700 dark:text-gray-300"><strong>Desain Kode Lebih Elegan</strong> - Struktur kode tetap mirip dengan Arduino asli, sehingga tetap mudah dipahami.</span>
+                                        <span class="text-gray-700"><strong>Desain Kode Lebih Elegan</strong> - Struktur kode tetap mirip dengan Arduino asli, sehingga tetap mudah dipahami.</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700 dark:text-gray-300"><strong>Cocok untuk Board Low-Memory</strong> - Dirancang khusus untuk board dengan SRAM & Flash kecil.</span>
+                                        <span class="text-gray-700"><strong>Cocok untuk Board Low-Memory</strong> - Dirancang khusus untuk board dengan SRAM & Flash kecil.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                        <span class="text-gray-700"><strong>Mudah Dipelajari</strong> - Sintaks yang sederhana membuatnya mudah dipelajari oleh pemula.</span>
                                     </li>
                                 </ul>
                                 
                                 <div class="mt-6">
-                                    <h4 class="font-medium text-gray-800 dark:text-white mb-3">Perbandingan Penggunaan Memori</h4>
+                                    <h4 class="font-medium text-gray-800 mb-3">Perbandingan Penggunaan Memori</h4>
                                     <table class="comparison-table">
                                         <tr>
-                                            <th class="text-gray-800 dark:text-white">Library</th>
-                                            <th class="text-gray-800 dark:text-white">Penggunaan Flash Memory</th>
+                                            <th>Library</th>
+                                            <th>Penggunaan Flash Memory</th>
                                         </tr>
                                         <tr>
-                                            <td class="text-gray-700 dark:text-gray-300">Arduino Standar</td>
-                                            <td class="text-gray-700 dark:text-gray-300">924 bytes</td>
+                                            <td>Arduino Standar</td>
+                                            <td>924 bytes</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-gray-700 dark:text-gray-300">ArduLite</td>
-                                            <td class="text-gray-700 dark:text-gray-300">190 bytes</td>
+                                            <td>ArduLite</td>
+                                            <td>190 bytes</td>
                                         </tr>
                                     </table>
-                                    <p class="text-gray-700 dark:text-gray-300 mt-2">Dengan ArduLite, Anda bisa menghemat lebih dari 79% memori!</p>
+                                    <p class="text-gray-700 mt-2">Dengan ArduLite, Anda bisa menghemat lebih dari 79% memori!</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Section 3 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 4: Installation -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-lg p-3 transition-colors duration-300">
-                                        <i class="fas fa-download text-green-500 text-xl"></i>
+                                    <div class="flex-shrink-0 bg-orange-100 rounded-lg p-3">
+                                        <i class="fas fa-download text-orange-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">Cara Instalasi</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">Panduan lengkap untuk menginstal ArduLite di Arduino IDE Anda.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">Cara Instalasi</h3>
+                                        <p class="mt-1 text-gray-600">Panduan lengkap untuk menginstal ArduLite di Arduino IDE Anda.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
                                 <div class="space-y-4">
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Melalui Library Manager Arduino IDE:</h4>
-                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-2">
+                                        <h4 class="font-medium text-gray-800">Metode 1: Melalui Library Manager Arduino IDE:</h4>
+                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 mt-2">
                                             <li>Buka Arduino IDE</li>
-                                            <li>Masuk ke menu <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">Sketch > Include Library > Manage Libraries</code></li>
+                                            <li>Masuk ke menu <code>Sketch > Include Library > Manage Libraries</code></li>
                                             <li>Cari <strong>ArduLite</strong></li>
                                             <li>Klik <strong>Install</strong></li>
                                         </ol>
                                     </div>
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Alternatif: Install Manual dari GitHub:</h4>
-                                        <p class="text-gray-700 dark:text-gray-300 mt-1">Clone repository dengan perintah:</p>
+                                        <h4 class="font-medium text-gray-800">Metode 2: Install Manual dari GitHub:</h4>
+                                        <p class="text-gray-700 mt-1">Download release terbaru dari GitHub atau clone repository dengan perintah:</p>
                                         <div class="code-block">
-                                            <div class="code-header">
-                                                <span>Terminal</span>
-                                                <button class="copy-btn text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded transition-colors">
-                                                    <i class="fas fa-copy mr-1"></i>Salin
-                                                </button>
-                                            </div>
-                                            <pre class="code-content"><code class="language-bash">git clone https://github.com/ArduLite.git</code></pre>
+                                            git clone https://github.com/ArduLite.git
                                         </div>
-                                        <p class="text-gray-700 dark:text-gray-300">Tambahkan ke Arduino IDE:</p>
-                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-2">
-                                            <li>Buka Arduino IDE</li>
-                                            <li>Masuk ke menu <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">Sketch > Include Library > Add .ZIP Library</code></li>
-                                            <li>Pilih folder ArduLite</li>
-                                        </ol>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Gunakan di Sketch Arduino:</h4>
+                                        <p class="text-gray-700">Ekstrak folder dan letakkan di dalam direktori libraries Arduino.</p>
+                                        <p class="text-gray-700">Restart Arduino IDE.</p>
+                                        <p class="text-gray-700">Sertakan library di proyek Anda:</p>
                                         <div class="code-block">
-                                            <div class="code-header">
-                                                <span>C++</span>
-                                                <button class="copy-btn text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded transition-colors">
-                                                    <i class="fas fa-copy mr-1"></i>Salin
-                                                </button>
-                                            </div>
-                                            <pre class="code-content"><code class="language-cpp">#include "ArduLite.h"
-
-int main() {
-    Digital led(13, OUT);
-
-    while(1){
-        led.on();
-        wait(300);
-        led.off();
-        wait(300);
-    }
-}</code></pre>
+                                            #include &lt;ArduLite.h&gt;
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Section 4 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 5: Usage -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-orange-100 dark:bg-orange-900 rounded-lg p-3 transition-colors duration-300">
-                                        <i class="fas fa-code text-orange-500 text-xl"></i>
+                                    <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3">
+                                        <i class="fas fa-code text-indigo-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">Uji Coba & Kontribusi</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">Coba ArduLite secara online dan berkontribusi untuk pengembangannya.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">Penggunaan</h3>
+                                        <p class="mt-1 text-gray-600">Contoh penggunaan ArduLite dalam berbagai skenario.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
+                                <div class="space-y-6">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Kontrol Digital Dasar</h4>
+                                        <p class="text-gray-600 mt-1">Contoh membaca tombol dan mengontrol LED:</p>
+                                        <div class="code-block">
+                                            #include &lt;ArduLite.h&gt;<br><br>
+                                            int main() {<br>
+                                            &nbsp;&nbsp;Digital button(2, IN);<br>
+                                            &nbsp;&nbsp;Digital led(13, OUT);<br><br>
+                                            &nbsp;&nbsp;while (1) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;if (!button.read()) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.toggle();<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(500);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                            &nbsp;&nbsp;}<br>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Kontrol PWM</h4>
+                                        <p class="text-gray-600 mt-1">Contoh mengatur kecerahan LED dengan PWM:</p>
+                                        <div class="code-block">
+                                            #include &lt;ArduLite.h&gt;<br><br>
+                                            int main() {<br>
+                                            &nbsp;&nbsp;PWM led(9);<br><br>
+                                            &nbsp;&nbsp;while (1) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 0; i &lt; 255; i++) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 255; i &gt; 0; i--) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                            &nbsp;&nbsp;}<br>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Membaca Sensor Analog</h4>
+                                        <p class="text-gray-600 mt-1">Contoh membaca sensor analog dan mengontrol kecerahan LED:</p>
+                                        <div class="code-block">
+                                            #include &lt;ArduLite.h&gt;<br><br>
+                                            int main() {<br>
+                                            &nbsp;&nbsp;PWM led(9);<br>
+                                            &nbsp;&nbsp;Analog sensor(A0);<br><br>
+                                            &nbsp;&nbsp;while (1) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;int sensorValue = sensor.read();<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;float brightness = sensorValue * (255.0 / 1023.0);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;led.write(brightness);<br>
+                                            &nbsp;&nbsp;}<br>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 6: Try & Contribute -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                            <div class="p-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-pink-100 rounded-lg p-3">
+                                        <i class="fas fa-users text-pink-500 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-medium text-gray-800">Kontribusi & Pengembangan</h3>
+                                        <p class="mt-1 text-gray-600">Berkontribusi untuk pengembangan ArduLite.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
                                 <div class="space-y-4">
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Uji Coba di Wokwi</h4>
-                                        <p class="text-gray-600 dark:text-gray-300 mt-1">Penasaran ingin mencoba sebelum install? Cek langsung di Wokwi:</p>
+                                        <h4 class="font-medium text-gray-800">Berkontribusi</h4>
+                                        <p class="text-gray-600 mt-1">Kontribusi sangat diterima! Silakan fork repository dan kirim pull request dengan peningkatan Anda.</p>
+                                        <a href="https://github.com/ArduLite" class="inline-block mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
+                                            <i class="fab fa-github mr-2"></i>GitHub Repository
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Author</h4>
+                                        <p class="text-gray-600 mt-1">ArduLite dibuat dan dikembangkan oleh:</p>
+                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
+                                            <li>Ajang Rahmat</li>
+                                            <li>GitHub: <a href="https://github.com/ArduLite" class="text-blue-500 hover:underline">ArduLite Repository</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Uji Coba di Wokwi</h4>
+                                        <p class="text-gray-600 mt-1">Penasaran ingin mencoba sebelum install? Cek langsung di Wokwi:</p>
                                         <a href="#" class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                                             <i class="fas fa-external-link-alt mr-2"></i>Coba ArduLite di Wokwi
                                         </a>
                                     </div>
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Dokumentasi & Pengembangan</h4>
-                                        <p class="text-gray-600 dark:text-gray-300 mt-1">ArduLite masih dalam tahap pengembangan, namun Anda bisa melihat source code awalnya di:</p>
-                                        <a href="https://github.com/ArduLite" class="inline-block mt-2 px-4 py-2 bg-gray-800 dark:bg-gray-600 text-white rounded-lg hover:bg-gray-900 dark:hover:bg-gray-700 transition-colors">
-                                            <i class="fab fa-github mr-2"></i>GitHub Repository
-                                        </a>
-                                        <p class="text-gray-700 dark:text-gray-300 mt-3">Jika ingin berkontribusi, silakan fork, buat pull request, atau beri ide di Issues! 🚀</p>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Dukungan</h4>
-                                        <p class="text-gray-600 dark:text-gray-300 mt-1">Bantu proyek ini berkembang dengan cara:</p>
-                                        <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300 mt-2">
+                                        <h4 class="font-medium text-gray-800">Dukungan</h4>
+                                        <p class="text-gray-600 mt-1">Bantu proyek ini berkembang dengan cara:</p>
+                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
                                             <li>⭐ Berikan Star di GitHub!</li>
                                             <li>🛠️ Bantu kembangkan kode (kontribusi selalu diterima!)</li>
                                             <li>📢 Bagikan ke teman-teman yang butuh library ringan untuk Arduino!</li>
                                         </ul>
-                                        <p class="text-gray-700 dark:text-gray-300 mt-3">Terima kasih sudah mendukung ArduLite! ✨🎨</p>
+                                        <p class="text-gray-700 mt-3">Terima kasih sudah mendukung ArduLite! ✨🎨</p>
                                     </div>
                                 </div>
                             </div>
@@ -322,196 +394,306 @@ int main() {
             <!-- English Content (Hidden by default) -->
             <div id="content-eng" class="content-section hidden-content">
                 <div class="max-w-3xl mx-auto">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-6 transition-colors duration-300">
-                        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">ArduLite</h2>
-                        <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">🎨 ArduLite - Lite Version of Arduino ⚡️</p>
-                        <p class="text-gray-600 dark:text-gray-300">Lightweight C++ library/framework specifically designed for Arduino boards with limited memory.</p>
+                    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">ArduLite</h2>
+                        <p class="text-lg text-gray-600 mb-4">🎨 ArduLite - Lite Version of Arduino ⚡️</p>
+                        <p class="text-gray-600">Lightweight C++ library/framework specifically designed for Arduino boards with limited memory.</p>
                     </div>
 
                     <div class="space-y-6">
-                        <!-- Section 1 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 1: Overview -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-blue-100 dark:bg-blue-900 rounded-lg p-3 transition-colors duration-300">
+                                    <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3">
                                         <i class="fas fa-info-circle text-blue-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">About ArduLite</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">ArduLite is a lightweight C++ library/framework specifically designed for Arduino boards with limited memory.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">Overview</h3>
+                                        <p class="mt-1 text-gray-600">ArduLite is a lightweight library designed to provide essential functionalities for Arduino with minimal footprint.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
-                                <p class="text-gray-700 dark:text-gray-300 mb-3">Supported boards:</p>
-                                <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
+                                <p class="text-gray-700 mb-3">It is ideal for resource-constrained projects where efficiency and simplicity are crucial.</p>
+                                <p class="text-gray-700">Supported boards:</p>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
                                     <li>Arduino Uno</li>
                                     <li>Arduino Nano</li>
                                     <li>Boards based on ATMega8</li>
                                 </ul>
-                                <p class="text-gray-700 dark:text-gray-300 mt-4">The main goal of ArduLite is to save memory usage compared to the standard Arduino framework, allowing applications to run more efficiently on devices with limited resources.</p>
+                                <p class="text-gray-700 mt-4">The main goal of ArduLite is to save memory usage compared to the standard Arduino framework, allowing applications to run more efficiently on devices with limited resources.</p>
                             </div>
                         </div>
 
-                        <!-- Section 2 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 2: Features -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-purple-100 dark:bg-purple-900 rounded-lg p-3 transition-colors duration-300">
+                                    <div class="flex-shrink-0 bg-purple-100 rounded-lg p-3">
                                         <i class="fas fa-star text-purple-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">Why ArduLite?</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">Advantages of using ArduLite for your Arduino projects.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">ArduLite Features</h3>
+                                        <p class="mt-1 text-gray-600">Various features available in ArduLite.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-microchip text-blue-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">Digital & Analog Pin Handling</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Easy control for digital and analog pins with simplified syntax.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-wave-square text-green-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">PWM Support</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Control devices with pulse width modulation (PWM) for various applications.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-code text-yellow-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">Simplified Syntax</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Easy-to-understand and use syntax, suitable for both beginners and experts.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-memory text-red-500"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">Optimized Memory Usage</h4>
+                                            <p class="text-gray-600 text-sm mt-1">Optimized for minimal memory usage, suitable for memory-constrained devices.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Why ArduLite? -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                            <div class="p-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-green-100 rounded-lg p-3">
+                                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-medium text-gray-800">Why ArduLite?</h3>
+                                        <p class="mt-1 text-gray-600">Advantages of using ArduLite for your Arduino projects.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
                                 <ul class="space-y-3">
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700 dark:text-gray-300"><strong>More Memory Efficient</strong> - Standard "blink" program on Arduino takes 924 bytes, while with ArduLite it's only 190 bytes!</span>
+                                        <span class="text-gray-700"><strong>More Memory Efficient</strong> - Standard "blink" program on Arduino takes 924 bytes, while with ArduLite it's only 190 bytes!</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700 dark:text-gray-300"><strong>More Elegant Code Design</strong> - Code structure remains similar to original Arduino, making it easy to understand.</span>
+                                        <span class="text-gray-700"><strong>More Elegant Code Design</strong> - Code structure remains similar to original Arduino, making it easy to understand.</span>
                                     </li>
                                     <li class="flex items-start">
                                         <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700 dark:text-gray-300"><strong>Suitable for Low-Memory Boards</strong> - Specifically designed for boards with small SRAM & Flash.</span>
+                                        <span class="text-gray-700"><strong>Suitable for Low-Memory Boards</strong> - Specifically designed for boards with small SRAM & Flash.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                        <span class="text-gray-700"><strong>Easy to Learn</strong> - Simple syntax makes it easy for beginners to learn.</span>
                                     </li>
                                 </ul>
                                 
                                 <div class="mt-6">
-                                    <h4 class="font-medium text-gray-800 dark:text-white mb-3">Memory Usage Comparison</h4>
+                                    <h4 class="font-medium text-gray-800 mb-3">Memory Usage Comparison</h4>
                                     <table class="comparison-table">
                                         <tr>
-                                            <th class="text-gray-800 dark:text-white">Library</th>
-                                            <th class="text-gray-800 dark:text-white">Flash Memory Usage</th>
+                                            <th>Library</th>
+                                            <th>Flash Memory Usage</th>
                                         </tr>
                                         <tr>
-                                            <td class="text-gray-700 dark:text-gray-300">Standard Arduino</td>
-                                            <td class="text-gray-700 dark:text-gray-300">924 bytes</td>
+                                            <td>Standard Arduino</td>
+                                            <td>924 bytes</td>
                                         </tr>
                                         <tr>
-                                            <td class="text-gray-700 dark:text-gray-300">ArduLite</td>
-                                            <td class="text-gray-700 dark:text-gray-300">190 bytes</td>
+                                            <td>ArduLite</td>
+                                            <td>190 bytes</td>
                                         </tr>
                                     </table>
-                                    <p class="text-gray-700 dark:text-gray-300 mt-2">With ArduLite, you can save more than 79% of memory!</p>
+                                    <p class="text-gray-700 mt-2">With ArduLite, you can save more than 79% of memory!</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Section 3 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 4: Installation -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-lg p-3 transition-colors duration-300">
-                                        <i class="fas fa-download text-green-500 text-xl"></i>
+                                    <div class="flex-shrink-0 bg-orange-100 rounded-lg p-3">
+                                        <i class="fas fa-download text-orange-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">Installation Guide</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">Complete guide to install ArduLite in your Arduino IDE.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">Installation Guide</h3>
+                                        <p class="mt-1 text-gray-600">Complete guide to install ArduLite in your Arduino IDE.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
                                 <div class="space-y-4">
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Via Arduino IDE Library Manager:</h4>
-                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-2">
+                                        <h4 class="font-medium text-gray-800">Method 1: Via Arduino IDE Library Manager:</h4>
+                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 mt-2">
                                             <li>Open Arduino IDE</li>
-                                            <li>Go to <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">Sketch > Include Library > Manage Libraries</code></li>
+                                            <li>Go to <code>Sketch > Include Library > Manage Libraries</code></li>
                                             <li>Search for <strong>ArduLite</strong></li>
                                             <li>Click <strong>Install</strong></li>
                                         </ol>
                                     </div>
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Alternative: Manual Installation from GitHub:</h4>
-                                        <p class="text-gray-700 dark:text-gray-300 mt-1">Clone the repository with command:</p>
+                                        <h4 class="font-medium text-gray-800">Method 2: Manual Installation from GitHub:</h4>
+                                        <p class="text-gray-700 mt-1">Download the latest release from GitHub or clone the repository with command:</p>
                                         <div class="code-block">
-                                            <div class="code-header">
-                                                <span>Terminal</span>
-                                                <button class="copy-btn text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded transition-colors">
-                                                    <i class="fas fa-copy mr-1"></i>Copy
-                                                </button>
-                                            </div>
-                                            <pre class="code-content"><code class="language-bash">git clone https://github.com/ArduLite.git</code></pre>
+                                            git clone https://github.com/ArduLite.git
                                         </div>
-                                        <p class="text-gray-700 dark:text-gray-300">Add to Arduino IDE:</p>
-                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-2">
-                                            <li>Open Arduino IDE</li>
-                                            <li>Go to <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">Sketch > Include Library > Add .ZIP Library</code></li>
-                                            <li>Select the ArduLite folder</li>
-                                        </ol>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Use in Arduino Sketch:</h4>
+                                        <p class="text-gray-700">Extract the folder and place it inside the Arduino libraries directory.</p>
+                                        <p class="text-gray-700">Restart the Arduino IDE.</p>
+                                        <p class="text-gray-700">Include the library in your project:</p>
                                         <div class="code-block">
-                                            <div class="code-header">
-                                                <span>C++</span>
-                                                <button class="copy-btn text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded transition-colors">
-                                                    <i class="fas fa-copy mr-1"></i>Copy
-                                                </button>
-                                            </div>
-                                            <pre class="code-content"><code class="language-cpp">#include "ArduLite.h"
-
-int main() {
-    Digital led(13, OUT);
-
-    while(1){
-        led.on();
-        wait(300);
-        led.off();
-        wait(300);
-    }
-}</code></pre>
+                                            #include &lt;ArduLite.h&gt;
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Section 4 -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden transition-colors duration-300">
+                        <!-- Section 5: Usage -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                             <div class="p-6">
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-orange-100 dark:bg-orange-900 rounded-lg p-3 transition-colors duration-300">
-                                        <i class="fas fa-code text-orange-500 text-xl"></i>
+                                    <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3">
+                                        <i class="fas fa-code text-indigo-500 text-xl"></i>
                                     </div>
                                     <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800 dark:text-white">Try & Contribute</h3>
-                                        <p class="mt-1 text-gray-600 dark:text-gray-300">Try ArduLite online and contribute to its development.</p>
+                                        <h3 class="text-lg font-medium text-gray-800">Usage</h3>
+                                        <p class="mt-1 text-gray-600">Examples of using ArduLite in various scenarios.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-t border-gray-200 dark:border-gray-700 px-6 py-4 bg-gray-50 dark:bg-gray-700 transition-colors duration-300">
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
+                                <div class="space-y-6">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Basic Digital Control</h4>
+                                        <p class="text-gray-600 mt-1">Example of reading a button and controlling an LED:</p>
+                                        <div class="code-block">
+                                            #include &lt;ArduLite.h&gt;<br><br>
+                                            int main() {<br>
+                                            &nbsp;&nbsp;Digital button(2, IN);<br>
+                                            &nbsp;&nbsp;Digital led(13, OUT);<br><br>
+                                            &nbsp;&nbsp;while (1) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;if (!button.read()) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.toggle();<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(500);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                            &nbsp;&nbsp;}<br>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">PWM Control</h4>
+                                        <p class="text-gray-600 mt-1">Example of controlling LED brightness with PWM:</p>
+                                        <div class="code-block">
+                                            #include &lt;ArduLite.h&gt;<br><br>
+                                            int main() {<br>
+                                            &nbsp;&nbsp;PWM led(9);<br><br>
+                                            &nbsp;&nbsp;while (1) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 0; i &lt; 255; i++) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 255; i &gt; 0; i--) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                            &nbsp;&nbsp;}<br>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Analog Sensor Reading</h4>
+                                        <p class="text-gray-600 mt-1">Example of reading an analog sensor and controlling LED brightness:</p>
+                                        <div class="code-block">
+                                            #include &lt;ArduLite.h&gt;<br><br>
+                                            int main() {<br>
+                                            &nbsp;&nbsp;PWM led(9);<br>
+                                            &nbsp;&nbsp;Analog sensor(A0);<br><br>
+                                            &nbsp;&nbsp;while (1) {<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;int sensorValue = sensor.read();<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;float brightness = sensorValue * (255.0 / 1023.0);<br>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;led.write(brightness);<br>
+                                            &nbsp;&nbsp;}<br>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 6: Try & Contribute -->
+                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                            <div class="p-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 bg-pink-100 rounded-lg p-3">
+                                        <i class="fas fa-users text-pink-500 text-xl"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-medium text-gray-800">Contribution & Development</h3>
+                                        <p class="mt-1 text-gray-600">Contribute to the development of ArduLite.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
                                 <div class="space-y-4">
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Try on Wokwi</h4>
-                                        <p class="text-gray-600 dark:text-gray-300 mt-1">Curious to try before installing? Check it out directly on Wokwi:</p>
+                                        <h4 class="font-medium text-gray-800">Contributing</h4>
+                                        <p class="text-gray-600 mt-1">Contributions are welcome! Please fork the repository and submit a pull request with your improvements.</p>
+                                        <a href="https://github.com/ArduLite" class="inline-block mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
+                                            <i class="fab fa-github mr-2"></i>GitHub Repository
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Author</h4>
+                                        <p class="text-gray-600 mt-1">ArduLite is created and developed by:</p>
+                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
+                                            <li>Ajang Rahmat</li>
+                                            <li>GitHub: <a href="https://github.com/ArduLite" class="text-blue-500 hover:underline">ArduLite Repository</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Try on Wokwi</h4>
+                                        <p class="text-gray-600 mt-1">Curious to try before installing? Check it out directly on Wokwi:</p>
                                         <a href="#" class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
                                             <i class="fas fa-external-link-alt mr-2"></i>Try ArduLite on Wokwi
                                         </a>
                                     </div>
                                     <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Documentation & Development</h4>
-                                        <p class="text-gray-600 dark:text-gray-300 mt-1">ArduLite is still in development, but you can see the initial source code at:</p>
-                                        <a href="https://github.com/ArduLite" class="inline-block mt-2 px-4 py-2 bg-gray-800 dark:bg-gray-600 text-white rounded-lg hover:bg-gray-900 dark:hover:bg-gray-700 transition-colors">
-                                            <i class="fab fa-github mr-2"></i>GitHub Repository
-                                        </a>
-                                        <p class="text-gray-700 dark:text-gray-300 mt-3">If you want to contribute, please fork, create a pull request, or share ideas in Issues! 🚀</p>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800 dark:text-white">Support</h4>
-                                        <p class="text-gray-600 dark:text-gray-300 mt-1">Help this project grow by:</p>
-                                        <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300 mt-2">
+                                        <h4 class="font-medium text-gray-800">Support</h4>
+                                        <p class="text-gray-600 mt-1">Help this project grow by:</p>
+                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
                                             <li>⭐ Give a Star on GitHub!</li>
                                             <li>🛠️ Help develop the code (contributions always welcome!)</li>
                                             <li>📢 Share with friends who need a lightweight library for Arduino!</li>
                                         </ul>
-                                        <p class="text-gray-700 dark:text-gray-300 mt-3">Thank you for supporting ArduLite! ✨🎨</p>
+                                        <p class="text-gray-700 mt-3">Thank you for supporting ArduLite! ✨🎨</p>
                                     </div>
                                 </div>
                             </div>
@@ -522,8 +704,8 @@ int main() {
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-6 transition-colors duration-300">
-            <div class="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400 text-sm">
+        <footer class="bg-white border-t border-gray-200 py-6">
+            <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
                 <p id="footer-text-indo" class="visible-content">© 2023 ArduLite Documentation. Semua hak dilindungi.</p>
                 <p id="footer-text-eng" class="hidden-content">© 2023 ArduLite Documentation. All rights reserved.</p>
             </div>
@@ -538,14 +720,6 @@ int main() {
             const contentEng = document.getElementById('content-eng');
             const footerIndo = document.getElementById('footer-text-indo');
             const footerEng = document.getElementById('footer-text-eng');
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            
-            // Check for saved theme preference or respect OS preference
-            if (localStorage.getItem('dark-mode') === 'true' || 
-                (!localStorage.getItem('dark-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                darkModeToggle.checked = true;
-            }
 
             // Function to switch to Indonesian
             function switchToIndo() {
@@ -559,10 +733,10 @@ int main() {
                 footerEng.classList.remove('visible-content');
                 footerEng.classList.add('hidden-content');
                 
-                langIndoBtn.classList.remove('bg-gray-200', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-300');
+                langIndoBtn.classList.remove('bg-gray-200', 'text-gray-700');
                 langIndoBtn.classList.add('bg-blue-500', 'text-white');
                 langEngBtn.classList.remove('bg-blue-500', 'text-white');
-                langEngBtn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                langEngBtn.classList.add('bg-gray-200', 'text-gray-700');
             }
 
             // Function to switch to English
@@ -578,42 +752,14 @@ int main() {
                 footerEng.classList.add('visible-content');
                 
                 langIndoBtn.classList.remove('bg-blue-500', 'text-white');
-                langIndoBtn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-                langEngBtn.classList.remove('bg-gray-200', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-300');
+                langIndoBtn.classList.add('bg-gray-200', 'text-gray-700');
+                langEngBtn.classList.remove('bg-gray-200', 'text-gray-700');
                 langEngBtn.classList.add('bg-blue-500', 'text-white');
             }
 
             // Event listeners for language buttons
             langIndoBtn.addEventListener('click', switchToIndo);
             langEngBtn.addEventListener('click', switchToEng);
-
-            // Dark mode toggle functionality
-            darkModeToggle.addEventListener('change', function() {
-                if (this.checked) {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('dark-mode', 'true');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('dark-mode', 'false');
-                }
-            });
-
-            // Copy code functionality
-            document.querySelectorAll('.copy-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const codeBlock = this.closest('.code-block').querySelector('code');
-                    const textToCopy = codeBlock.textContent;
-                    
-                    navigator.clipboard.writeText(textToCopy).then(() => {
-                        const originalText = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                        }, 2000);
-                    });
-                });
-            });
         });
     </script>
 </body>
