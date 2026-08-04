@@ -1,766 +1,1386 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArduLite Documentation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .language-switch {
-            transition: all 0.3s ease;
-        }
-        .language-switch:hover {
-            transform: scale(1.05);
-        }
-        .content-section {
-            transition: opacity 0.3s ease;
-        }
-        .hidden-content {
-            display: none;
-            opacity: 0;
-        }
-        .visible-content {
-            display: block;
-            opacity: 1;
-        }
-        .code-block {
-            background-color: #f7f7f7;
-            border-radius: 6px;
-            padding: 16px;
-            font-family: 'Courier New', monospace;
-            margin: 12px 0;
-            overflow-x: auto;
-            border-left: 4px solid #3b82f6;
-        }
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-        }
-        .comparison-table th, .comparison-table td {
-            border: 1px solid #e2e8f0;
-            padding: 12px;
-            text-align: center;
-        }
-        .comparison-table th {
-            background-color: #f8fafc;
-            font-weight: 600;
-        }
-        .feature-icon {
-            background-color: #f0f9ff;
-            border-radius: 8px;
-            padding: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArduLite — Modern C++ Framework for Arduino AVR | Free Documentation &amp; API Reference</title>
+<meta name="description" content="ArduLite is a free, beginner-friendly C++ framework for Arduino Uno, Nano and Mega 2560 — zero heap, zero overhead, no Arduino.h. Full API reference, install guide and 20+ code examples.">
+<meta name="keywords" content="ArduLite, Arduino AVR framework, Arduino C++ library, Arduino Uno programming, Arduino Nano tutorial, Arduino Mega 2560, AVR bare metal C++, embedded C++ for beginners, zero overhead Arduino, register level Arduino programming, PT AViSha Inovasi Indonesia, Kelas Robot">
+<meta name="author" content="Ajang Rahmat, PT AViSha Inovasi Indonesia">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#0E9C93">
+<link rel="canonical" href="https://ardulite.github.io/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='white'/%3E%3Crect x='10' y='24' width='44' height='16' rx='3' fill='%23161615'/%3E%3C/svg%3E">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ArduLite Documentation">
+<meta property="og:title" content="ArduLite — Modern C++ Framework for Arduino AVR">
+<meta property="og:description" content="Free, beginner-friendly, zero-overhead C++ framework for Arduino Uno, Nano and Mega 2560. Full API reference and 20+ ready-to-run examples.">
+<meta property="og:url" content="https://ardulite.github.io/">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ArduLite — Modern C++ Framework for Arduino AVR">
+<meta name="twitter:description" content="Free, beginner-friendly, zero-overhead C++ framework for Arduino Uno, Nano and Mega 2560.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "ArduLite",
+  "description": "A lightweight, zero-overhead C++ framework for Arduino AVR boards (Uno, Nano, Mega 2560), built without the Arduino Core.",
+  "codeRepository": "https://github.com/ArduLite/ArduLite",
+  "programmingLanguage": "C++",
+  "runtimePlatform": "Arduino AVR (ATmega328P, ATmega2560)",
+  "license": "https://opensource.org/licenses/MIT",
+  "author": {
+    "@type": "Person",
+    "name": "Ajang Rahmat"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "PT AViSha Inovasi Indonesia"
+  },
+  "softwareVersion": "2.0.0"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is ArduLite?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ArduLite is a free, open-source C++ framework for programming Arduino AVR boards (Uno, Nano, Mega 2560) directly at the register level, without using the Arduino Core. It gives beginners a simple, readable API like led.on() while still compiling down to a single AVR instruction." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to know C++ or microcontroller registers to use ArduLite?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. ArduLite is designed to be beginner-friendly: you write simple statements like Digital led(13, OUT); led.on(); without ever touching a register directly. Understanding registers is optional background knowledge, not a requirement." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is ArduLite compatible with the normal Arduino IDE?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Install it like any Arduino library by placing the ArduLite folder in your Arduino libraries directory, then select Arduino Uno, Nano, or Mega 2560 as the board and include ArduLite.h." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is ArduLite free to use?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, ArduLite is released under the MIT License, free for personal, educational, and commercial projects." }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    /* Palette matched to the ArduLite wordmark: solid black type + teal-blue dot accent */
+    --paper:#FFFFFF;
+    --paper-raised:#F6F7F6;
+    --ink:#161615;
+    --ink-soft:#57564F;
+    --ink-faint:#8C8A80;
+    --line:#E5E4DC;
+    --copper:#0E9C93;        /* teal-blue "kehijauan" accent, sampled from the logo dot */
+    --copper-dark:#0B756F;
+    --circuit:#1C7FB8;       /* complementary blue, same family as the dot */
+    --circuit-soft:#E3F3F1;
+    --amber:#0E9C93;
+    --warn:#B5622A;
+    --warn-bg:#F4E4D6;
+    --code-bg:#15191A;
+    --code-ink:#F3F3EF;
+    --code-comment:#868E90;
+    --code-accent:#59D9C6;
+    --code-string:#A6D98C;
+    --code-type:#7FB9E8;
+    --radius:3px;
+    --maxw:1280px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    font-weight:600;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+    margin:0 0 .5em 0;
+  }
+  code, pre, .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{ color:var(--copper-dark); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  p{ margin:0 0 1em 0; }
+  ::selection{ background:var(--amber); color:#1a1a1a; }
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(243,239,227,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{ display:flex; align-items:center; gap:0; }
+  .brand-name{ font-family:'Space Grotesk'; font-weight:700; font-size:21px; letter-spacing:-0.01em; color:var(--ink); }
+  .brand-tag{ font-size:12px; color:var(--ink-soft); font-family:'IBM Plex Mono'; }
+  .logo-hero{ display:flex; flex-direction:column; align-items:flex-start; margin-bottom:8px; }
+  .logo-hero .word{ font-family:'Space Grotesk'; font-weight:700; font-size:40px; letter-spacing:-0.01em; color:var(--ink); line-height:1; }
+  .topbar-right{ display:flex; align-items:center; gap:14px; }
+  .version-pill{
+    font-family:'IBM Plex Mono'; font-size:12px; padding:4px 10px;
+    background:var(--circuit-soft); color:var(--circuit); border-radius:20px; font-weight:600;
+  }
+  .gh-link{
+    font-size:13px; font-weight:600; color:var(--ink); border:1px solid var(--line);
+    padding:6px 12px; border-radius:20px; display:flex; align-items:center; gap:6px;
+  }
+  .gh-link:hover{ border-color:var(--copper); text-decoration:none; color:var(--copper-dark); }
+
+  /* ---------- layout ---------- */
+  .shell{ max-width:var(--maxw); margin:0 auto; padding:0 24px; display:flex; gap:44px; align-items:flex-start; }
+  .sidebar{
+    width:250px; flex-shrink:0; position:sticky; top:66px;
+    max-height:calc(100vh - 80px); overflow-y:auto; padding:28px 0 40px 0;
+  }
+  .sidebar::-webkit-scrollbar{ width:5px; }
+  .sidebar::-webkit-scrollbar-thumb{ background:var(--line); border-radius:4px; }
+  .navgroup{ margin-bottom:20px; }
+  .navgroup-label{
+    font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-faint); margin:0 0 6px 8px; font-weight:600;
+  }
+  .navgroup a{
+    display:block; padding:5px 8px; border-radius:var(--radius); font-size:13.5px;
+    color:var(--ink-soft); border-left:2px solid transparent;
+  }
+  .navgroup a:hover{ background:var(--paper-raised); color:var(--ink); text-decoration:none; }
+  .navgroup a.active{ color:var(--copper-dark); border-left-color:var(--copper); background:var(--paper-raised); font-weight:600; }
+
+  .content{ flex:1; min-width:0; padding:32px 0 100px 0; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:56px 0 40px 0; border-bottom:1px solid var(--line); margin-bottom:48px;
+  }
+  .hero-eyebrow{
+    font-family:'IBM Plex Mono'; font-size:12px; color:var(--copper-dark); font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; margin-bottom:14px;
+  }
+  .hero h1{ font-size:44px; line-height:1.08; max-width:760px; }
+  .hero p.lead{ font-size:18px; color:var(--ink-soft); max-width:640px; margin-top:14px; }
+  .hero-actions{ display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; }
+  .btn{
+    font-family:'IBM Plex Mono'; font-size:13.5px; font-weight:600; padding:10px 18px;
+    border-radius:var(--radius); display:inline-block; border:1px solid transparent;
+  }
+  .btn-primary{ background:var(--ink); color:var(--paper); }
+  .btn-primary:hover{ background:#000; text-decoration:none; }
+  .btn-secondary{ border-color:var(--line); color:var(--ink); }
+  .btn-secondary:hover{ border-color:var(--copper); color:var(--copper-dark); text-decoration:none; }
+
+  /* signature: instruction strip */
+  .instr-strip{
+    margin-top:36px; background:var(--code-bg); border-radius:6px; padding:20px 24px;
+    display:flex; flex-wrap:wrap; gap:0; overflow:hidden;
+  }
+  .instr-row{ display:flex; align-items:center; gap:14px; font-family:'IBM Plex Mono'; font-size:13px;
+    padding:6px 0; width:100%; border-bottom:1px solid rgba(243,239,227,0.08); }
+  .instr-row:last-child{ border-bottom:none; }
+  .instr-src{ color:var(--code-ink); width:220px; flex-shrink:0; }
+  .instr-arrow{ color:var(--ink-faint); }
+  .instr-asm{ color:var(--code-accent); font-weight:600; }
+  .instr-note{ color:var(--code-comment); font-size:12px; margin-left:auto; }
+
+  /* ---------- sections ---------- */
+  section{ margin-bottom:64px; scroll-margin-top:80px; }
+  .section-kicker{ font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--copper-dark); font-weight:600; margin-bottom:6px; }
+  section h2{ font-size:28px; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:20px; }
+  section h3{ font-size:20px; margin-top:32px; }
+  section h4{ font-size:15px; margin-top:22px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; font-family:'IBM Plex Mono'; font-weight:600;}
+
+  .lead-p{ font-size:16.5px; color:var(--ink-soft); max-width:760px; }
+
+  .callout{
+    border-left:3px solid var(--copper); background:var(--paper-raised); padding:14px 18px;
+    border-radius:0 4px 4px 0; margin:18px 0; font-size:14.5px;
+  }
+  .callout.circuit{ border-left-color:var(--circuit); }
+  .callout b{ color:var(--ink); }
+
+  /* module card header */
+  .module{
+    border:1px solid var(--line); border-radius:8px; padding:26px 28px; margin-bottom:28px; background:var(--paper-raised);
+  }
+  .module-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:6px;}
+  .module-head h3{ margin:0; font-size:21px; }
+  .module-file{ font-family:'IBM Plex Mono'; font-size:12px; color:var(--ink-faint); }
+  .module-desc{ color:var(--ink-soft); font-size:14.5px; margin-bottom:16px; max-width:720px; }
+  .badges{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+  .badge{
+    font-family:'IBM Plex Mono'; font-size:11px; padding:3px 9px; border-radius:20px; font-weight:600;
+    background:var(--circuit-soft); color:var(--circuit);
+  }
+  .badge.warn{ background:var(--warn-bg); color:var(--warn); }
+
+  /* code blocks */
+  .code{ background:var(--code-bg); border-radius:6px; margin:14px 0; overflow:hidden; }
+  .code-head{
+    display:flex; align-items:center; justify-content:space-between; padding:8px 16px;
+    font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--code-comment);
+    border-bottom:1px solid rgba(255,255,255,0.07);
+  }
+  .code-head .dots{ display:flex; gap:5px; }
+  .code-head .dots span{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.15); display:block;}
+  .code pre{ margin:0; padding:16px 18px; overflow-x:auto; }
+  .code code{ color:var(--code-ink); font-size:13px; line-height:1.65; white-space:pre; }
+  .c-kw{ color:var(--code-accent); }
+  .c-tp{ color:var(--code-type); }
+  .c-cm{ color:var(--code-comment); font-style:italic; }
+  .c-st{ color:var(--code-string); }
+  .c-nm{ color:#D6A5E8; }
+
+  /* tables */
+  table.api{ width:100%; border-collapse:collapse; margin:14px 0 20px 0; font-size:14px; }
+  table.api th{
+    text-align:left; font-family:'IBM Plex Mono'; font-size:11.5px; text-transform:uppercase;
+    letter-spacing:.05em; color:var(--ink-faint); border-bottom:2px solid var(--line); padding:8px 10px;
+  }
+  table.api td{ padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.api td.mono{ font-family:'IBM Plex Mono'; font-size:13px; color:var(--copper-dark); white-space:nowrap; font-weight:600; }
+  table.api tr:last-child td{ border-bottom:none; }
+
+  /* wiring box */
+  .wiring{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin:14px 0;
+  }
+  .wiring div{
+    background:var(--paper); border:1px dashed var(--line); border-radius:6px; padding:10px 12px; font-size:13px;
+  }
+  .wiring div b{ display:block; font-family:'IBM Plex Mono'; font-size:11px; color:var(--circuit); text-transform:uppercase; margin-bottom:3px; letter-spacing:.03em;}
+
+  /* pin map table alt */
+  .pinmap{ overflow-x:auto; }
+  .pinmap table{ min-width:640px; }
+
+  /* examples grid */
+  .ex-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; margin-top:18px; }
+  .ex-card{
+    border:1px solid var(--line); border-radius:6px; padding:14px 16px; background:var(--paper-raised);
+  }
+  .ex-card .ex-cat{ font-family:'IBM Plex Mono'; font-size:10.5px; text-transform:uppercase; color:var(--copper-dark); font-weight:700; letter-spacing:.05em;}
+  .ex-card h4{ margin:6px 0 4px 0; font-size:14.5px; color:var(--ink); text-transform:none; letter-spacing:0; font-family:'Inter'; font-weight:600;}
+  .ex-card p{ font-size:12.5px; color:var(--ink-soft); margin:0; }
+
+  /* comparison */
+  .cmp{ width:100%; border-collapse:collapse; margin:16px 0; font-size:14px;}
+  .cmp th{ background:var(--ink); color:var(--paper); font-family:'IBM Plex Mono'; font-size:12px; padding:10px 14px; text-align:left; }
+  .cmp td{ padding:10px 14px; border-bottom:1px solid var(--line); }
+  .cmp td.arduino{ font-family:'IBM Plex Mono'; color:var(--ink-faint); }
+  .cmp td.ardulite{ font-family:'IBM Plex Mono'; color:var(--circuit); font-weight:600; }
+
+  footer{ border-top:1px solid var(--line); padding:36px 0; text-align:center; color:var(--ink-faint); font-size:13px; }
+
+  .toc-inline{ font-size:13px; color:var(--ink-soft); }
+  .steps{ counter-reset:step; list-style:none; padding:0; margin:16px 0; }
+  .steps li{ counter-increment:step; padding:10px 0 10px 40px; position:relative; border-bottom:1px solid var(--line); font-size:14.5px;}
+  .steps li:last-child{ border-bottom:none; }
+  .steps li::before{
+    content:counter(step); position:absolute; left:0; top:8px; width:24px; height:24px;
+    background:var(--ink); color:var(--paper); border-radius:50%; font-family:'IBM Plex Mono'; font-size:12px;
+    display:flex; align-items:center; justify-content:center; font-weight:600;
+  }
+
+  @media (max-width:900px){
+    .sidebar{ display:none; }
+    .hero h1{ font-size:32px; }
+    .shell{ padding:0 16px; }
+  }
+</style>
 </head>
-<body class="bg-gray-50 font-sans antialiased">
-    <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <header class="bg-white shadow-sm sticky top-0 z-10">
-            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-microchip text-blue-500 text-2xl"></i>
-                    <h1 class="text-xl font-semibold text-gray-800">ArduLite Documentation</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button id="lang-indo" class="language-switch px-3 py-1 rounded-full bg-blue-500 text-white text-sm font-medium">
-                        ID
-                    </button>
-                    <button id="lang-eng" class="language-switch px-3 py-1 rounded-full bg-gray-200 text-gray-700 text-sm font-medium">
-                        EN
-                    </button>
-                </div>
-            </div>
-        </header>
+<body>
 
-        <!-- Main Content -->
-        <main class="flex-grow container mx-auto px-4 py-8">
-            <!-- Indonesian Content (Default) -->
-            <div id="content-indo" class="content-section visible-content">
-                <div class="max-w-3xl mx-auto">
-                    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
-                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">ArduLite</h2>
-                        <p class="text-lg text-gray-600 mb-4">🎨 ArduLite - Arduino Versi Lite ⚡️</p>
-                        <p class="text-gray-600">Library/framework ringan untuk C++ yang dirancang khusus untuk board Arduino dengan memori terbatas.</p>
-                    </div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-name">ArduLite</span>
+    </div>
+    <div class="topbar-right">
+      <span class="version-pill">v2.0.0</span>
+      <a class="gh-link" href="https://github.com/ArduLite/ArduLite" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</header>
 
-                    <div class="space-y-6">
-                        <!-- Section 1: Overview -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3">
-                                        <i class="fas fa-info-circle text-blue-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Overview</h3>
-                                        <p class="mt-1 text-gray-600">ArduLite adalah library ringan yang dirancang untuk menyediakan fungsionalitas penting untuk Arduino dengan footprint minimal.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <p class="text-gray-700 mb-3">ArduLite sangat ideal untuk proyek dengan sumber daya terbatas di mana efisiensi dan kesederhanaan sangat penting.</p>
-                                <p class="text-gray-700">Board yang didukung:</p>
-                                <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
-                                    <li>Arduino Uno</li>
-                                    <li>Arduino Nano</li>
-                                    <li>Board berbasis ATMega8</li>
-                                </ul>
-                                <p class="text-gray-700 mt-4">Tujuan utama dari ArduLite adalah menghemat penggunaan memori dibandingkan dengan framework Arduino standar, sehingga memungkinkan aplikasi berjalan lebih efisien di perangkat dengan sumber daya terbatas.</p>
-                            </div>
-                        </div>
+<div class="shell">
+  <nav class="sidebar" id="sidebar" aria-label="Documentation sections">
+    <div class="navgroup">
+      <p class="navgroup-label">Getting Started</p>
+      <a href="#overview">Overview</a>
+      <a href="#why">Why ArduLite</a>
+      <a href="#install">Installation</a>
+      <a href="#quickstart">Quick Start</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">Core Concepts</p>
+      <a href="#zero-overhead">Zero-Overhead Model</a>
+      <a href="#timers-map">Timer &amp; Resource Map</a>
+      <a href="#core-h">Core Header (ArduLite.h)</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">GPIO Reference</p>
+      <a href="#digital">Digital</a>
+      <a href="#analog">Analog</a>
+      <a href="#pwm">PWM</a>
+      <a href="#pulse">Pulse</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">Timing Reference</p>
+      <a href="#time">Time</a>
+      <a href="#timer">Timer</a>
+      <a href="#stopwatch">Stopwatch</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">Components Reference</p>
+      <a href="#led">LED</a>
+      <a href="#button">Button</a>
+      <a href="#relay">Relay</a>
+      <a href="#buzzer">Buzzer</a>
+      <a href="#servo">Servo</a>
+      <a href="#ultrasonic">Ultrasonic</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">Communication</p>
+      <a href="#uart">UART</a>
+      <a href="#i2c">I2C</a>
+      <a href="#spi">SPI</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">Interrupts</p>
+      <a href="#interrupt">Interrupt (External)</a>
+      <a href="#pinchange">PinChange</a>
+      <a href="#timerinterrupt">TimerInterrupt</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">Storage &amp; Utilities</p>
+      <a href="#eeprom">EEPROM</a>
+      <a href="#utils">Utils</a>
+    </div>
+    <div class="navgroup">
+      <p class="navgroup-label">Appendix</p>
+      <a href="#boards">Supported Boards &amp; Pins</a>
+      <a href="#comparison">ArduLite vs Arduino Core</a>
+      <a href="#examples">Examples Index</a>
+      <a href="#rules">Design Rules</a>
+      <a href="#license">License</a>
+      <a href="#faq">FAQ for Beginners</a>
+    </div>
+  </nav>
 
-                        <!-- Section 2: Features -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-purple-100 rounded-lg p-3">
-                                        <i class="fas fa-star text-purple-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Fitur ArduLite</h3>
-                                        <p class="mt-1 text-gray-600">Berbagai fitur yang tersedia di ArduLite.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-microchip text-blue-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">Penanganan Pin Digital & Analog</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Kontrol mudah untuk pin digital dan analog dengan sintaks yang disederhanakan.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-wave-square text-green-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">Dukungan PWM</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Kontrol perangkat dengan modulasi lebar pulsa (PWM) untuk berbagai aplikasi.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-code text-yellow-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">Sintaks yang Disederhanakan</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Sintaks yang mudah dipahami dan digunakan, cocok untuk pemula maupun ahli.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-memory text-red-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">Optimasi Penggunaan Memori</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Dioptimalkan untuk penggunaan memori minimal, cocok untuk perangkat dengan memori terbatas.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <main class="content">
 
-                        <!-- Section 3: Why ArduLite? -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-green-100 rounded-lg p-3">
-                                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Mengapa ArduLite?</h3>
-                                        <p class="mt-1 text-gray-600">Keunggulan menggunakan ArduLite untuk proyek Arduino Anda.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <ul class="space-y-3">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>Lebih Hemat Memori</strong> - Program "blink" standar pada Arduino memakan 924 bytes, sementara dengan ArduLite hanya 190 bytes saja!</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>Desain Kode Lebih Elegan</strong> - Struktur kode tetap mirip dengan Arduino asli, sehingga tetap mudah dipahami.</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>Cocok untuk Board Low-Memory</strong> - Dirancang khusus untuk board dengan SRAM & Flash kecil.</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>Mudah Dipelajari</strong> - Sintaks yang sederhana membuatnya mudah dipelajari oleh pemula.</span>
-                                    </li>
-                                </ul>
-                                
-                                <div class="mt-6">
-                                    <h4 class="font-medium text-gray-800 mb-3">Perbandingan Penggunaan Memori</h4>
-                                    <table class="comparison-table">
-                                        <tr>
-                                            <th>Library</th>
-                                            <th>Penggunaan Flash Memory</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Arduino Standar</td>
-                                            <td>924 bytes</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ArduLite</td>
-                                            <td>190 bytes</td>
-                                        </tr>
-                                    </table>
-                                    <p class="text-gray-700 mt-2">Dengan ArduLite, Anda bisa menghemat lebih dari 79% memori!</p>
-                                </div>
-                            </div>
-                        </div>
+    <div class="hero" id="overview">
+      <div class="logo-hero" aria-hidden="true"><span class="word">ArduLite</span></div>
+      <p class="hero-eyebrow">Modern C++ Framework for Arduino AVR.</p>
+      <h1>Beginner-friendly on the surface. Register-level underneath.</h1>
+      <p class="lead">ArduLite is a lightweight, header-driven C++ framework for bare-metal AVR programming on the Arduino Uno, Nano, and Mega 2560. No <code>pinMode</code>, no <code>digitalWrite</code>, no hidden runtime — every call is designed to fold away at compile time into plain register access. New to microcontrollers? Start with <a href="#quickstart">Quick Start</a> — you don't need to understand registers to use it.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#install">Install ArduLite</a>
+        <a class="btn btn-secondary" href="#quickstart">Read Quick Start</a>
+        <a class="btn btn-secondary" href="https://github.com/ArduLite/ArduLite" target="_blank" rel="noopener">View Source</a>
+      </div>
 
-                        <!-- Section 4: Installation -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-orange-100 rounded-lg p-3">
-                                        <i class="fas fa-download text-orange-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Cara Instalasi</h3>
-                                        <p class="mt-1 text-gray-600">Panduan lengkap untuk menginstal ArduLite di Arduino IDE Anda.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="space-y-4">
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Metode 1: Melalui Library Manager Arduino IDE:</h4>
-                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 mt-2">
-                                            <li>Buka Arduino IDE</li>
-                                            <li>Masuk ke menu <code>Sketch > Include Library > Manage Libraries</code></li>
-                                            <li>Cari <strong>ArduLite</strong></li>
-                                            <li>Klik <strong>Install</strong></li>
-                                        </ol>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Metode 2: Install Manual dari GitHub:</h4>
-                                        <p class="text-gray-700 mt-1">Download release terbaru dari GitHub atau clone repository dengan perintah:</p>
-                                        <div class="code-block">
-                                            git clone https://github.com/ArduLite.git
-                                        </div>
-                                        <p class="text-gray-700">Ekstrak folder dan letakkan di dalam direktori libraries Arduino.</p>
-                                        <p class="text-gray-700">Restart Arduino IDE.</p>
-                                        <p class="text-gray-700">Sertakan library di proyek Anda:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 5: Usage -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3">
-                                        <i class="fas fa-code text-indigo-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Penggunaan</h3>
-                                        <p class="mt-1 text-gray-600">Contoh penggunaan ArduLite dalam berbagai skenario.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="space-y-6">
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Kontrol Digital Dasar</h4>
-                                        <p class="text-gray-600 mt-1">Contoh membaca tombol dan mengontrol LED:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;<br><br>
-                                            int main() {<br>
-                                            &nbsp;&nbsp;Digital button(2, IN);<br>
-                                            &nbsp;&nbsp;Digital led(13, OUT);<br><br>
-                                            &nbsp;&nbsp;while (1) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;if (!button.read()) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.toggle();<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(500);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                                            &nbsp;&nbsp;}<br>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Kontrol PWM</h4>
-                                        <p class="text-gray-600 mt-1">Contoh mengatur kecerahan LED dengan PWM:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;<br><br>
-                                            int main() {<br>
-                                            &nbsp;&nbsp;PWM led(9);<br><br>
-                                            &nbsp;&nbsp;while (1) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 0; i &lt; 255; i++) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 255; i &gt; 0; i--) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                                            &nbsp;&nbsp;}<br>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Membaca Sensor Analog</h4>
-                                        <p class="text-gray-600 mt-1">Contoh membaca sensor analog dan mengontrol kecerahan LED:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;<br><br>
-                                            int main() {<br>
-                                            &nbsp;&nbsp;PWM led(9);<br>
-                                            &nbsp;&nbsp;Analog sensor(A0);<br><br>
-                                            &nbsp;&nbsp;while (1) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;int sensorValue = sensor.read();<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;float brightness = sensorValue * (255.0 / 1023.0);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;led.write(brightness);<br>
-                                            &nbsp;&nbsp;}<br>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 6: Try & Contribute -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-pink-100 rounded-lg p-3">
-                                        <i class="fas fa-users text-pink-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Kontribusi & Pengembangan</h3>
-                                        <p class="mt-1 text-gray-600">Berkontribusi untuk pengembangan ArduLite.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="space-y-4">
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Berkontribusi</h4>
-                                        <p class="text-gray-600 mt-1">Kontribusi sangat diterima! Silakan fork repository dan kirim pull request dengan peningkatan Anda.</p>
-                                        <a href="https://github.com/ArduLite" class="inline-block mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
-                                            <i class="fab fa-github mr-2"></i>GitHub Repository
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Author</h4>
-                                        <p class="text-gray-600 mt-1">ArduLite dibuat dan dikembangkan oleh:</p>
-                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
-                                            <li>Ajang Rahmat</li>
-                                            <li>GitHub: <a href="https://github.com/ArduLite" class="text-blue-500 hover:underline">ArduLite Repository</a></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Uji Coba di Wokwi</h4>
-                                        <p class="text-gray-600 mt-1">Penasaran ingin mencoba sebelum install? Cek langsung di Wokwi:</p>
-                                        <a href="#" class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                                            <i class="fas fa-external-link-alt mr-2"></i>Coba ArduLite di Wokwi
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Dukungan</h4>
-                                        <p class="text-gray-600 mt-1">Bantu proyek ini berkembang dengan cara:</p>
-                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
-                                            <li>⭐ Berikan Star di GitHub!</li>
-                                            <li>🛠️ Bantu kembangkan kode (kontribusi selalu diterima!)</li>
-                                            <li>📢 Bagikan ke teman-teman yang butuh library ringan untuk Arduino!</li>
-                                        </ul>
-                                        <p class="text-gray-700 mt-3">Terima kasih sudah mendukung ArduLite! ✨🎨</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- English Content (Hidden by default) -->
-            <div id="content-eng" class="content-section hidden-content">
-                <div class="max-w-3xl mx-auto">
-                    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
-                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">ArduLite</h2>
-                        <p class="text-lg text-gray-600 mb-4">🎨 ArduLite - Lite Version of Arduino ⚡️</p>
-                        <p class="text-gray-600">Lightweight C++ library/framework specifically designed for Arduino boards with limited memory.</p>
-                    </div>
-
-                    <div class="space-y-6">
-                        <!-- Section 1: Overview -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3">
-                                        <i class="fas fa-info-circle text-blue-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Overview</h3>
-                                        <p class="mt-1 text-gray-600">ArduLite is a lightweight library designed to provide essential functionalities for Arduino with minimal footprint.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <p class="text-gray-700 mb-3">It is ideal for resource-constrained projects where efficiency and simplicity are crucial.</p>
-                                <p class="text-gray-700">Supported boards:</p>
-                                <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
-                                    <li>Arduino Uno</li>
-                                    <li>Arduino Nano</li>
-                                    <li>Boards based on ATMega8</li>
-                                </ul>
-                                <p class="text-gray-700 mt-4">The main goal of ArduLite is to save memory usage compared to the standard Arduino framework, allowing applications to run more efficiently on devices with limited resources.</p>
-                            </div>
-                        </div>
-
-                        <!-- Section 2: Features -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-purple-100 rounded-lg p-3">
-                                        <i class="fas fa-star text-purple-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">ArduLite Features</h3>
-                                        <p class="mt-1 text-gray-600">Various features available in ArduLite.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-microchip text-blue-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">Digital & Analog Pin Handling</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Easy control for digital and analog pins with simplified syntax.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-wave-square text-green-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">PWM Support</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Control devices with pulse width modulation (PWM) for various applications.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-code text-yellow-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">Simplified Syntax</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Easy-to-understand and use syntax, suitable for both beginners and experts.</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="feature-icon">
-                                            <i class="fas fa-memory text-red-500"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-medium text-gray-800">Optimized Memory Usage</h4>
-                                            <p class="text-gray-600 text-sm mt-1">Optimized for minimal memory usage, suitable for memory-constrained devices.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 3: Why ArduLite? -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-green-100 rounded-lg p-3">
-                                        <i class="fas fa-check-circle text-green-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Why ArduLite?</h3>
-                                        <p class="mt-1 text-gray-600">Advantages of using ArduLite for your Arduino projects.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <ul class="space-y-3">
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>More Memory Efficient</strong> - Standard "blink" program on Arduino takes 924 bytes, while with ArduLite it's only 190 bytes!</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>More Elegant Code Design</strong> - Code structure remains similar to original Arduino, making it easy to understand.</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>Suitable for Low-Memory Boards</strong> - Specifically designed for boards with small SRAM & Flash.</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                        <span class="text-gray-700"><strong>Easy to Learn</strong> - Simple syntax makes it easy for beginners to learn.</span>
-                                    </li>
-                                </ul>
-                                
-                                <div class="mt-6">
-                                    <h4 class="font-medium text-gray-800 mb-3">Memory Usage Comparison</h4>
-                                    <table class="comparison-table">
-                                        <tr>
-                                            <th>Library</th>
-                                            <th>Flash Memory Usage</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Standard Arduino</td>
-                                            <td>924 bytes</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ArduLite</td>
-                                            <td>190 bytes</td>
-                                        </tr>
-                                    </table>
-                                    <p class="text-gray-700 mt-2">With ArduLite, you can save more than 79% of memory!</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 4: Installation -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-orange-100 rounded-lg p-3">
-                                        <i class="fas fa-download text-orange-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Installation Guide</h3>
-                                        <p class="mt-1 text-gray-600">Complete guide to install ArduLite in your Arduino IDE.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="space-y-4">
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Method 1: Via Arduino IDE Library Manager:</h4>
-                                        <ol class="list-decimal list-inside space-y-2 text-gray-700 mt-2">
-                                            <li>Open Arduino IDE</li>
-                                            <li>Go to <code>Sketch > Include Library > Manage Libraries</code></li>
-                                            <li>Search for <strong>ArduLite</strong></li>
-                                            <li>Click <strong>Install</strong></li>
-                                        </ol>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Method 2: Manual Installation from GitHub:</h4>
-                                        <p class="text-gray-700 mt-1">Download the latest release from GitHub or clone the repository with command:</p>
-                                        <div class="code-block">
-                                            git clone https://github.com/ArduLite.git
-                                        </div>
-                                        <p class="text-gray-700">Extract the folder and place it inside the Arduino libraries directory.</p>
-                                        <p class="text-gray-700">Restart the Arduino IDE.</p>
-                                        <p class="text-gray-700">Include the library in your project:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 5: Usage -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-indigo-100 rounded-lg p-3">
-                                        <i class="fas fa-code text-indigo-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Usage</h3>
-                                        <p class="mt-1 text-gray-600">Examples of using ArduLite in various scenarios.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="space-y-6">
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Basic Digital Control</h4>
-                                        <p class="text-gray-600 mt-1">Example of reading a button and controlling an LED:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;<br><br>
-                                            int main() {<br>
-                                            &nbsp;&nbsp;Digital button(2, IN);<br>
-                                            &nbsp;&nbsp;Digital led(13, OUT);<br><br>
-                                            &nbsp;&nbsp;while (1) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;if (!button.read()) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.toggle();<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(500);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                                            &nbsp;&nbsp;}<br>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">PWM Control</h4>
-                                        <p class="text-gray-600 mt-1">Example of controlling LED brightness with PWM:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;<br><br>
-                                            int main() {<br>
-                                            &nbsp;&nbsp;PWM led(9);<br><br>
-                                            &nbsp;&nbsp;while (1) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 0; i &lt; 255; i++) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;for (byte i = 255; i &gt; 0; i--) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;led.write(i);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait(5);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                                            &nbsp;&nbsp;}<br>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Analog Sensor Reading</h4>
-                                        <p class="text-gray-600 mt-1">Example of reading an analog sensor and controlling LED brightness:</p>
-                                        <div class="code-block">
-                                            #include &lt;ArduLite.h&gt;<br><br>
-                                            int main() {<br>
-                                            &nbsp;&nbsp;PWM led(9);<br>
-                                            &nbsp;&nbsp;Analog sensor(A0);<br><br>
-                                            &nbsp;&nbsp;while (1) {<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;int sensorValue = sensor.read();<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;float brightness = sensorValue * (255.0 / 1023.0);<br>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;led.write(brightness);<br>
-                                            &nbsp;&nbsp;}<br>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Section 6: Try & Contribute -->
-                        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-                            <div class="p-6">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 bg-pink-100 rounded-lg p-3">
-                                        <i class="fas fa-users text-pink-500 text-xl"></i>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-medium text-gray-800">Contribution & Development</h3>
-                                        <p class="mt-1 text-gray-600">Contribute to the development of ArduLite.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-200 px-6 py-4 bg-gray-50">
-                                <div class="space-y-4">
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Contributing</h4>
-                                        <p class="text-gray-600 mt-1">Contributions are welcome! Please fork the repository and submit a pull request with your improvements.</p>
-                                        <a href="https://github.com/ArduLite" class="inline-block mt-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
-                                            <i class="fab fa-github mr-2"></i>GitHub Repository
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Author</h4>
-                                        <p class="text-gray-600 mt-1">ArduLite is created and developed by:</p>
-                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
-                                            <li>Ajang Rahmat</li>
-                                            <li>GitHub: <a href="https://github.com/ArduLite" class="text-blue-500 hover:underline">ArduLite Repository</a></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Try on Wokwi</h4>
-                                        <p class="text-gray-600 mt-1">Curious to try before installing? Check it out directly on Wokwi:</p>
-                                        <a href="#" class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                                            <i class="fas fa-external-link-alt mr-2"></i>Try ArduLite on Wokwi
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-medium text-gray-800">Support</h4>
-                                        <p class="text-gray-600 mt-1">Help this project grow by:</p>
-                                        <ul class="list-disc list-inside space-y-1 text-gray-700 mt-2">
-                                            <li>⭐ Give a Star on GitHub!</li>
-                                            <li>🛠️ Help develop the code (contributions always welcome!)</li>
-                                            <li>📢 Share with friends who need a lightweight library for Arduino!</li>
-                                        </ul>
-                                        <p class="text-gray-700 mt-3">Thank you for supporting ArduLite! ✨🎨</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-white border-t border-gray-200 py-6">
-            <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
-                <p id="footer-text-indo" class="visible-content">© 2023 ArduLite Documentation. Semua hak dilindungi.</p>
-                <p id="footer-text-eng" class="hidden-content">© 2023 ArduLite Documentation. All rights reserved.</p>
-            </div>
-        </footer>
+      <div class="instr-strip">
+        <div class="instr-row"><span class="instr-src">Digital led(13, OUT);</span><span class="instr-arrow">→</span><span class="instr-asm">sbi 0x04, 5</span><span class="instr-note">DDRB |= 1&lt;&lt;5 — set as output</span></div>
+        <div class="instr-row"><span class="instr-src">led.on();</span><span class="instr-arrow">→</span><span class="instr-asm">sbi 0x05, 5</span><span class="instr-note">PORTB |= 1&lt;&lt;5</span></div>
+        <div class="instr-row"><span class="instr-src">led.off();</span><span class="instr-arrow">→</span><span class="instr-asm">cbi 0x05, 5</span><span class="instr-note">PORTB &amp;= ~(1&lt;&lt;5)</span></div>
+        <div class="instr-row"><span class="instr-src">led.toggle();</span><span class="instr-arrow">→</span><span class="instr-asm">ldi r24,0x20 / out 0x03,r24</span><span class="instr-note">write-1-to-PINB toggles PORTB, 2 cycles</span></div>
+        <div class="instr-row"><span class="instr-src">led.read();</span><span class="instr-arrow">→</span><span class="instr-asm">sbic 0x03, 5</span><span class="instr-note">test PINB bit 5 directly</span></div>
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const langIndoBtn = document.getElementById('lang-indo');
-            const langEngBtn = document.getElementById('lang-eng');
-            const contentIndo = document.getElementById('content-indo');
-            const contentEng = document.getElementById('content-eng');
-            const footerIndo = document.getElementById('footer-text-indo');
-            const footerEng = document.getElementById('footer-text-eng');
+    <section id="why">
+      <p class="section-kicker">01 · Design Philosophy</p>
+      <h2>Why ArduLite exists</h2>
+      <p class="lead-p">The Arduino Core is friendly, but its abstractions — <code>digitalWrite</code>'s pin lookup table, <code>String</code>'s heap churn, <code>delay()</code>'s Timer0 dependency — cost cycles and bytes you don't always get to see. ArduLite is what you get if you rebuild the beginner-friendly vocabulary on nothing but <code>avr-libc</code>, and refuse anything that isn't zero-cost.</p>
 
-            // Function to switch to Indonesian
-            function switchToIndo() {
-                contentIndo.classList.remove('hidden-content');
-                contentIndo.classList.add('visible-content');
-                contentEng.classList.remove('visible-content');
-                contentEng.classList.add('hidden-content');
-                
-                footerIndo.classList.remove('hidden-content');
-                footerIndo.classList.add('visible-content');
-                footerEng.classList.remove('visible-content');
-                footerEng.classList.add('hidden-content');
-                
-                langIndoBtn.classList.remove('bg-gray-200', 'text-gray-700');
-                langIndoBtn.classList.add('bg-blue-500', 'text-white');
-                langEngBtn.classList.remove('bg-blue-500', 'text-white');
-                langEngBtn.classList.add('bg-gray-200', 'text-gray-700');
-            }
+      <h3>Goals</h3>
+      <table class="api">
+        <tr><th>Goal</th><th>How ArduLite delivers it</th></tr>
+        <tr><td class="mono">Zero heap</td><td><code>new</code>, <code>malloc</code>, <code>std::vector</code>, <code>std::string</code> are all off the table. Every object lives on the stack or in static storage with a size known at compile time.</td></tr>
+        <tr><td class="mono">Zero collision</td><td>ArduLite never defines <code>pinMode</code>, <code>digitalWrite</code>, <code>delay</code>, <code>millis</code>, <code>HIGH</code>/<code>LOW</code>, or <code>byte</code>. It can be mixed into a project that still uses the Arduino Core without a single symbol clash.</td></tr>
+        <tr><td class="mono">Zero overhead</td><td>Pin-facing methods are marked <code>always_inline</code>. With a literal pin number, the whole lookup folds away at compile time into one <code>sbi</code>/<code>cbi</code>/<code>sbic</code> instruction — see the strip above.</td></tr>
+        <tr><td class="mono">Opt-in everything</td><td>The master header only pulls in Digital, Analog, PWM and Utils. Timers, UART, SPI, I2C, interrupts and every component are separate headers you include only when you use them, so an unused peripheral is never initialized and never costs flash.</td></tr>
+      </table>
 
-            // Function to switch to English
-            function switchToEng() {
-                contentIndo.classList.remove('visible-content');
-                contentIndo.classList.add('hidden-content');
-                contentEng.classList.remove('hidden-content');
-                contentEng.classList.add('visible-content');
-                
-                footerIndo.classList.remove('visible-content');
-                footerIndo.classList.add('hidden-content');
-                footerEng.classList.remove('hidden-content');
-                footerEng.classList.add('visible-content');
-                
-                langIndoBtn.classList.remove('bg-blue-500', 'text-white');
-                langIndoBtn.classList.add('bg-gray-200', 'text-gray-700');
-                langEngBtn.classList.remove('bg-gray-200', 'text-gray-700');
-                langEngBtn.classList.add('bg-blue-500', 'text-white');
-            }
+      <h3>Explicit non-goals</h3>
+      <p class="lead-p">ArduLite 1.x/2.x is scoped deliberately narrow. It does <b>not</b> attempt to support ESP8266, ESP32, STM32 or RP2040, and it does not ship WiFi, Bluetooth, Ethernet, MQTT, HTTP, OTA, or an RTOS. Those belong to separate projects built for those chips — bolting them onto an AVR-only, no-heap framework would break every guarantee above.</p>
 
-            // Event listeners for language buttons
-            langIndoBtn.addEventListener('click', switchToIndo);
-            langEngBtn.addEventListener('click', switchToEng);
-        });
-    </script>
+      <div class="callout">
+        <b>Who it's for.</b> Students and teachers who want to see what a microcontroller is actually doing; makers and hobbyists who want Arduino-level readability without giving up register-level performance; embedded developers who want a sane starting point instead of writing raw <code>avr/io.h</code> by hand every time.
+      </div>
+    </section>
+
+    <section id="install">
+      <p class="section-kicker">02 · Setup</p>
+      <h2>Installation</h2>
+      <h3>Arduino IDE — via Library Manager (easiest)</h3>
+      <ol class="steps">
+        <li>Open the Arduino IDE, then go to <i>Sketch → Include Library → Manage Libraries…</i> (or press <code>Ctrl+Shift+I</code>).</li>
+        <li>Search for <b>ArduLite</b> in the Library Manager search box.</li>
+        <li>Click <b>Install</b> on the ArduLite entry by Ajang Rahmat.</li>
+        <li>Select <b>Arduino Uno</b>, <b>Arduino Nano</b>, or <b>Arduino Mega 2560</b> under <i>Tools → Board</i> — ArduLite only targets these three.</li>
+        <li>Include the master header in your sketch: <code>#include &lt;ArduLite.h&gt;</code>.</li>
+      </ol>
+
+      <h3>Arduino IDE — manual install</h3>
+      <ol class="steps">
+        <li>Download the latest release archive from <a href="https://github.com/ArduLite/ArduLite" target="_blank" rel="noopener">github.com/ArduLite/ArduLite</a>.</li>
+        <li>Extract it and rename the folder to <code>ArduLite</code> if needed, then place it inside your Arduino <code>libraries</code> directory (<code>Documents/Arduino/libraries</code> on most systems).</li>
+        <li>Restart the Arduino IDE so it re-scans the libraries folder.</li>
+        <li>Select your board and include <code>ArduLite.h</code>, same as above.</li>
+      </ol>
+
+      <h3>PlatformIO</h3>
+      <p style="font-size:14.5px;color:var(--ink-soft);">Add it as a library dependency from the command line — PlatformIO fetches it straight from the GitHub repository, no manual copying needed.</p>
+      <div class="code">
+        <div class="code-head"><span>terminal</span><span class="dots"><span></span><span></span><span></span></span></div>
+        <pre><code><span class="c-cm"># from inside your PlatformIO project folder</span>
+pio pkg install --library "https://github.com/ArduLite/ArduLite.git"
+
+<span class="c-cm"># or, for an older PlatformIO CLI version:</span>
+pio lib install "https://github.com/ArduLite/ArduLite.git"</code></pre>
+      </div>
+      <p style="font-size:14.5px;color:var(--ink-soft);">Or add it directly to <code>platformio.ini</code> and let PlatformIO install it on the next build:</p>
+      <div class="code">
+        <div class="code-head"><span>platformio.ini</span><span class="dots"><span></span><span></span><span></span></span></div>
+        <pre><code>[env:uno]
+platform = atmelavr
+board = uno
+framework = arduino
+lib_deps =
+    https://github.com/ArduLite/ArduLite.git
+
+<span class="c-cm">; ArduLite does not need the Arduino framework at runtime, but PlatformIO's</span>
+<span class="c-cm">; "arduino" framework is the simplest way to get an avr-gcc toolchain wired up.</span></code></pre>
+      </div>
+      <p style="font-size:14.5px;color:var(--ink-soft);">Then run <code>pio run</code> to build, or <code>pio run -t upload</code> to build and flash.</p>
+
+      <div class="callout circuit">
+        <b>No <code>Arduino.h</code> required.</b> ArduLite sketches use a plain <code>int main()</code> entry point instead of <code>setup()</code>/<code>loop()</code>. If you're on the Arduino IDE, this still compiles fine — the IDE just needs one <code>.ino</code> file with a <code>main()</code> in it, which every ArduLite example provides.
+      </div>
+    </section>
+
+    <section id="quickstart">
+      <p class="section-kicker">03 · First Sketch</p>
+      <h2>Quick Start</h2>
+      <p class="lead-p">Three progressively richer examples: a blink, a PWM fade, and a sensor-driven brightness loop — the same three examples from the project README, shown here with a line-by-line breakdown.</p>
+
+      <h4>1. Blink</h4>
+      <div class="code">
+        <div class="code-head"><span>Led_Blink.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+        <pre><code><span class="c-kw">#include</span> <span class="c-st">&lt;ArduLite.h&gt;</span>
+
+<span class="c-tp">int</span> main() {
+    <span class="c-tp">Digital</span> led(<span class="c-nm">13</span>, OUT);
+
+    forever() {
+        led.on();
+        wait(<span class="c-nm">1000</span>);
+        led.off();
+        wait(<span class="c-nm">1000</span>);
+    }
+}</code></pre>
+      </div>
+      <p><code>Digital led(13, OUT)</code> configures pin 13 as an output once, at construction. <code>forever()</code> expands to <code>while(1)</code>. <code>wait(1000)</code> blocks for 1000&nbsp;ms using a calibrated <code>_delay_loop_2</code> — no Timer0, no <code>millis()</code> dependency.</p>
+
+      <h4>2. PWM fade</h4>
+      <div class="code">
+        <div class="code-head"><span>Led_PWM.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+        <pre><code><span class="c-kw">#include</span> <span class="c-st">&lt;ArduLite.h&gt;</span>
+
+<span class="c-tp">int</span> main() {
+    <span class="c-tp">PWM</span> led(<span class="c-nm">9</span>);
+
+    forever() {
+        <span class="c-kw">for</span> (uint8_t i = <span class="c-nm">0</span>; i &lt; <span class="c-nm">255</span>; i++) { led.write(i); wait(<span class="c-nm">5</span>); }
+        <span class="c-kw">for</span> (uint8_t i = <span class="c-nm">255</span>; i &gt; <span class="c-nm">0</span>; i--) { led.write(i); wait(<span class="c-nm">5</span>); }
+    }
+}</code></pre>
+      </div>
+
+      <h4>3. Sensor-driven brightness</h4>
+      <div class="code">
+        <div class="code-head"><span>Analog_Read_Control_Led_Brightness.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+        <pre><code><span class="c-kw">#include</span> <span class="c-st">&lt;ArduLite.h&gt;</span>
+
+<span class="c-tp">int</span> main() {
+    <span class="c-tp">PWM</span> led(<span class="c-nm">9</span>);
+    <span class="c-tp">Analog</span> sensor(A0);
+
+    forever() {
+        <span class="c-tp">int</span> sensorValue = sensor.read();
+        <span class="c-tp">float</span> brightness = sensorValue * (<span class="c-nm">255.0</span> / <span class="c-nm">1023.0</span>);
+        led.write(brightness);
+    }
+}</code></pre>
+      </div>
+      <p>All three sketches are in <code>examples/</code>, importable directly from <i>File → Examples → ArduLite</i> in the Arduino IDE.</p>
+    </section>
+
+    <section id="zero-overhead">
+      <p class="section-kicker">04 · Core Concepts</p>
+      <h2>The zero-overhead model</h2>
+      <p class="lead-p">Two techniques make this possible almost everywhere in ArduLite:</p>
+
+      <h3>1. <code>always_inline</code> + compile-time constant pins</h3>
+      <p>Every pin-facing helper (<code>digitalWriteHigh</code>, <code>digitalTogglePin</code>, ...) is marked <code>__attribute__((always_inline))</code>. Without it, GCC would leave the call as a real function at <code>-Os</code>, and the pin number would stop being a compile-time constant — forcing a runtime bit-shift to compute <code>(1 &lt;&lt; pin)</code>. With the attribute, and a literal pin like <code>Digital led(13, OUT)</code>, the entire register lookup folds away and one method call becomes one AVR instruction.</p>
+
+      <h3>2. Hardware toggle instead of read-modify-write</h3>
+      <p><code>toggle()</code> exploits a real AVR feature: writing a logic <code>1</code> to a bit in the <code>PINx</code> register flips that bit of <code>PORTx</code>, leaving every other bit untouched — 2 cycles, no read-modify-write race. Older chips without this feature (ATmega8/16/32) automatically fall back to <code>PORTx ^= mask</code>.</p>
+
+      <table class="api">
+        <tr><th>ArduLite call</th><th>Compiles to (ATmega328P, literal pin)</th></tr>
+        <tr><td class="mono">Digital led(13, OUT)</td><td class="mono">sbi 0x04, 5</td></tr>
+        <tr><td class="mono">led.on()</td><td class="mono">sbi 0x05, 5</td></tr>
+        <tr><td class="mono">led.off()</td><td class="mono">cbi 0x05, 5</td></tr>
+        <tr><td class="mono">led.read()</td><td class="mono">sbic 0x03, 5</td></tr>
+        <tr><td class="mono">led.toggle()</td><td class="mono">out 0x03, r24 (PINB write-1-to-toggle)</td></tr>
+      </table>
+
+      <div class="callout">
+        This only holds when the pin number is a literal or a <code>constexpr</code>. Passing a runtime variable as the pin still works correctly, but the compiler can no longer fold the branch chain, so you pay for the port lookup at runtime — the same trade-off you'd hit writing the register logic by hand.
+      </div>
+    </section>
+
+    <section id="timers-map">
+      <h2>Timer &amp; resource map</h2>
+      <p class="lead-p">ArduLite is careful never to let two modules fight over the same hardware timer. Know this map before combining modules in one sketch.</p>
+      <table class="api">
+        <tr><th>Resource</th><th>Owner</th><th>Notes</th></tr>
+        <tr><td class="mono">Timer0</td><td>Untouched</td><td>Reserved for the Arduino Core's own <code>millis()</code>/<code>delay()</code> if you ever mix them in — ArduLite never touches it.</td></tr>
+        <tr><td class="mono">Timer1</td><td><code>PWM</code> (pins 9/10 Uno), <code>Servo</code>, <code>Pulse</code></td><td>Do not use <code>Servo</code>, <code>Pulse</code>, and <code>PWM</code> on pin 9/10 at the same time — they all reconfigure Timer1.</td></tr>
+        <tr><td class="mono">Timer2 — COMPA</td><td><code>Time</code> / <code>Timer</code> / <code>Stopwatch</code> / <code>Button</code> / <code>Interrupt</code> debounce</td><td>The single 1&nbsp;ms tick source (<code>initTimer()</code>), shared safely by every module that needs a clock.</td></tr>
+        <tr><td class="mono">Timer2 — COMPB</td><td><code>createTimer()</code> (TimerInterrupt)</td><td>Only enabled when <code>initTimerInterrupt()</code>/<code>createTimer()</code> is actually called — a sketch that never uses it pays nothing.</td></tr>
+        <tr><td class="mono">ADC</td><td><code>Analog</code></td><td>Initialized lazily on first <code>read()</code> call, AVcc reference, default prescaler 64.</td></tr>
+        <tr><td class="mono">TWI/I2C hardware</td><td><code>i2c</code> global (<code>ArduLiteI2C</code>)</td><td>Bit-rate register fixed at construction time (<code>TWBR=72</code>) — roughly 100&nbsp;kHz at 16&nbsp;MHz.</td></tr>
+        <tr><td class="mono">SPI hardware</td><td><code>spi</code> global (<code>ArduLiteSPI</code>)</td><td>Master mode only. The SS/CS pin is <b>not</b> managed automatically — pick it yourself via <code>Digital</code>.</td></tr>
+        <tr><td class="mono">UART hardware</td><td><code>uart</code> / <code>uart1..3</code> globals</td><td>Mega 2560 exposes all four hardware UARTs; Uno/Nano only <code>uart</code> (UART0).</td></tr>
+        <tr><td class="mono">EEPROM</td><td><code>eeprom</code> global</td><td>1024 bytes on ATmega328P, 4096 bytes on ATmega2560.</td></tr>
+      </table>
+    </section>
+
+    <section id="core-h">
+      <h2>Core header — <code>ArduLite.h</code></h2>
+      <p class="lead-p">The master header is intentionally small. It defines short integer aliases, the <code>forever()</code> macro, and the two blocking-wait functions, then pulls in only Digital, Analog, PWM and Utils. Everything else is opt-in.</p>
+
+      <table class="api">
+        <tr><th>Symbol</th><th>What it is</th></tr>
+        <tr><td class="mono">int8 / int16 / int32<br>uint8 / uint16 / uint32</td><td>Aliases for <code>int8_t</code> … <code>uint32_t</code>, in ArduLite's own naming style.</td></tr>
+        <tr><td class="mono">forever() { }</td><td>Macro for <code>while(1) { }</code> — the main program loop, used instead of Arduino's <code>loop()</code> callback.</td></tr>
+        <tr><td class="mono">wait(uint32_t ms)</td><td>Blocking millisecond delay. A real <code>inline</code> function, deliberately <b>not</b> a macro — a macro would rewrite every <code>wait(...)</code> substring across the whole program, including unrelated method names.</td></tr>
+        <tr><td class="mono">waitMicros(uint16_t us)</td><td>Blocking microsecond delay, built on <code>_delay_loop_2</code> (4 CPU cycles/iteration). One call covers up to ~16383&nbsp;µs at 16&nbsp;MHz.</td></tr>
+      </table>
+
+      <div class="callout">
+        <code>wait()</code>/<code>waitMicros()</code> never touch a timer — they're busy-loops calibrated purely from <code>F_CPU</code>. That means they can be called safely even before <code>initTimer()</code> has run, and they never collide with <code>ArduLiteTime</code>'s Timer2-based clock.
+      </div>
+    </section>
+
+    <!-- ======================= GPIO ======================= -->
+    <section id="digital">
+      <p class="section-kicker">05 · GPIO Reference</p>
+      <h2>Digital</h2>
+      <p class="module-file">src/ArduLiteDigital.h</p>
+      <p class="lead-p">Digital pin control with true zero-cost abstraction. Holds a single byte of RAM (the pin number) and nothing else — every method is <code>always_inline</code>.</p>
+
+      <div class="module">
+        <div class="badges"><span class="badge">Header-only</span><span class="badge">1 byte RAM</span><span class="badge">No heap</span></div>
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Digital(pin, dir)</td><td>Configures <code>pin</code> as <code>IN</code> or <code>OUT</code>. Direction is applied once, immediately.</td></tr>
+          <tr><td class="mono">on()</td><td>Drives the pin HIGH.</td></tr>
+          <tr><td class="mono">off()</td><td>Drives the pin LOW.</td></tr>
+          <tr><td class="mono">write(bool value)</td><td>HIGH when <code>true</code>, LOW when <code>false</code>.</td></tr>
+          <tr><td class="mono">read() const</td><td>Returns the current logic level as <code>bool</code>.</td></tr>
+          <tr><td class="mono">toggle()</td><td>Flips the pin — uses the hardware PINx-toggle trick where available.</td></tr>
+          <tr><td class="mono">pullUp()</td><td>Enables the internal pull-up resistor. Only meaningful on an <code>IN</code> pin.</td></tr>
+          <tr><td class="mono">number() const</td><td>Returns the stored pin number.</td></tr>
+        </table>
+
+        <div class="code">
+          <div class="code-head"><span>Led_Toggle_With_Push_Button.ino (excerpt)</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-kw">#include</span> <span class="c-st">&lt;ArduLite.h&gt;</span>
+
+<span class="c-tp">int</span> main() {
+    <span class="c-tp">Digital</span> button(<span class="c-nm">2</span>, IN);
+    <span class="c-tp">Digital</span> led(<span class="c-nm">13</span>, OUT);
+    button.pullUp();   <span class="c-cm">// button wired to GND, no external resistor needed</span>
+
+    forever() {
+        <span class="c-kw">if</span> (!button.read()) {   <span class="c-cm">// active-low: pressed == LOW</span>
+            led.toggle();
+            wait(<span class="c-nm">300</span>);          <span class="c-cm">// crude debounce</span>
+        }
+    }
+}</code></pre>
+        </div>
+        <div class="callout">
+          Direction constants are the enum <code>Direction { IN, OUT }</code> — ArduLite's own vocabulary, never Arduino's <code>INPUT</code>/<code>OUTPUT</code>, so both can coexist in one project.
+        </div>
+      </div>
+    </section>
+
+    <section id="analog">
+      <h2>Analog</h2>
+      <p class="module-file">src/ArduLiteAnalog.h / .cpp</p>
+      <p class="lead-p">10-bit ADC reads through the AVR's built-in analog-to-digital converter. Arduino-style <code>A0</code>–<code>A15</code> pin constants are defined automatically if not already present.</p>
+      <div class="module">
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Analog(pin)</td><td>Binds to an analog pin (e.g. <code>A0</code>). The ADC hardware itself is initialized lazily, on the first <code>read()</code> call across the whole program.</td></tr>
+          <tr><td class="mono">read()</td><td>Blocking single conversion. Returns a 10-bit value, <code>0</code>–<code>1023</code>.</td></tr>
+          <tr><td class="mono">setPrescaler(uint8_t factor)</td><td>Sets the ADC clock prescaler: <code>2, 4, 8, 16, 32, 64,</code> or <code>128</code>. Default is <code>64</code> (a safe, accurate speed at 16&nbsp;MHz). Lower prescalers read faster but lose precision.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Analog_Coding_Test_Speed.ino (excerpt)</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Analog</span> sensor(A0);
+sensor.setPrescaler(<span class="c-nm">16</span>);   <span class="c-cm">// faster reads, slightly less accurate</span>
+
+<span class="c-tp">int</span> raw = sensor.read();      <span class="c-cm">// 0 - 1023</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="pwm">
+      <h2>PWM</h2>
+      <p class="module-file">src/ArduLitePWM.h / .cpp</p>
+      <p class="lead-p">Hardware PWM output using each chip's fast-PWM timer channels directly (Timer0/1/2/3/4 depending on pin and board) — no <code>analogWrite()</code>, no software bit-banging.</p>
+      <div class="module">
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">PWM(pin)</td><td>Attaches to a PWM-capable pin and configures the matching timer in fast-PWM mode, non-inverted. Pins that aren't PWM-capable on the target board are silently ignored (no-op).</td></tr>
+          <tr><td class="mono">write(uint8_t value)</td><td>Duty cycle 0-255. <code>0</code> disables PWM output entirely and forces the pin LOW (rather than leaving a 0%-duty PWM signal running).</td></tr>
+        </table>
+        <div class="wiring">
+          <div><b>Uno / Nano</b>PWM pins: 3, 5, 6, 9, 10, 11</div>
+          <div><b>Mega 2560</b>PWM pins: 2–13, 44–46</div>
+        </div>
+        <div class="code">
+          <div class="code-head"><span>Led_PWM.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">PWM</span> led(<span class="c-nm">9</span>);
+led.write(<span class="c-nm">128</span>);   <span class="c-cm">// ~50% brightness</span>
+led.write(<span class="c-nm">0</span>);     <span class="c-cm">// off, pin forced LOW</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="pulse">
+      <h2>Pulse</h2>
+      <p class="module-file">src/ArduLitePulse.h</p>
+      <p class="lead-p">Measures pulse width in microseconds via Timer1, equivalent to Arduino's <code>pulseIn()</code> but implemented directly on the register.</p>
+      <div class="module">
+        <div class="badges"><span class="badge warn">Uses Timer1</span></div>
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Pulse(pin, mode=IN, timeoutUs=30000)</td><td>Binds to a pin (D0-D19 range) with a busy-wait timeout in microseconds.</td></tr>
+          <tr><td class="mono">read()</td><td>Waits for a full HIGH pulse and returns its duration in microseconds. Returns <code>0</code> on timeout.</td></tr>
+          <tr><td class="mono">readLow()</td><td>Same, but measures a LOW pulse instead.</td></tr>
+          <tr><td class="mono">setTimeout(uint32_t timeoutUs)</td><td>Changes the timeout without recreating the object.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Simple_Pulse_Read.ino (pattern)</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Pulse</span> input(<span class="c-nm">7</span>);
+
+forever() {
+    <span class="c-tp">unsigned long</span> width = input.read();  <span class="c-cm">// microseconds, 0 = timeout</span>
+}</code></pre>
+        </div>
+        <div class="callout">Shares Timer1 with <code>PWM</code> (pins 9/10) and <code>Servo</code> — don't combine them in the same sketch.</div>
+      </div>
+    </section>
+
+    <!-- ======================= Timing ======================= -->
+    <section id="time">
+      <p class="section-kicker">06 · Timing Reference</p>
+      <h2>Time, Timer &amp; Stopwatch</h2>
+      <p class="module-file">src/ArduLiteTime.h</p>
+      <p class="lead-p">ArduLite never defines <code>millis()</code>, <code>micros()</code> or <code>delay()</code> as free functions — that vocabulary lives inside objects (<code>time.millis()</code>) so it can never collide with the Arduino Core. Timer2 is the single 1&nbsp;ms tick source shared by everything in this file, plus <code>Button</code> and <code>Interrupt</code> debounce.</p>
+
+      <div class="module">
+        <h4>Time — reads the running clock</h4>
+        <p style="font-size:14px;color:var(--ink-soft);margin-top:-6px;">Every method is <code>static</code> and the class holds no data — <code>time</code> costs no RAM and adds no call overhead beyond the read itself.</p>
+        <table class="api">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td class="mono">time.millis()</td><td>Milliseconds since the timer started. Wraps to 0 after ~49 days.</td></tr>
+          <tr><td class="mono">time.micros()</td><td>Microseconds since start, 4&nbsp;µs resolution @16&nbsp;MHz. Wraps after ~71 minutes.</td></tr>
+          <tr><td class="mono">time.seconds()</td><td>Whole seconds since start.</td></tr>
+          <tr><td class="mono">time.now()</td><td>Alias for <code>millis()</code>.</td></tr>
+          <tr><td class="mono">Time::wait(uint32_t ms)</td><td>Blocking wait based on the Timer2 clock rather than a busy-loop — stays accurate even when <code>ms</code> comes from a variable.</td></tr>
+          <tr><td class="mono">Time::waitMicros(uint16_t us)</td><td>Blocking microsecond wait, same underlying primitive as the core header's <code>waitMicros()</code>.</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="timer">
+      <div class="module">
+        <h4>Timer — non-blocking periodic task</h4>
+        <p style="font-size:14px;color:var(--ink-soft);margin-top:-6px;">9 bytes of RAM per instance. No interrupt, no callback — just a polled check you call from inside <code>forever()</code>.</p>
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Timer(uint32_t intervalMs)</td><td>Starts counting immediately from construction.</td></tr>
+          <tr><td class="mono">ready()</td><td>Returns <code>true</code> exactly once each time the interval elapses. Advances by one interval rather than snapping to "now" — the rhythm doesn't drift, but resynchronizes automatically if it falls far behind.</td></tr>
+          <tr><td class="mono">reset()</td><td>Restarts counting from the current time.</td></tr>
+          <tr><td class="mono">setInterval(ms)</td><td>Changes the interval and restarts counting.</td></tr>
+          <tr><td class="mono">start() / stop()</td><td>Pauses/resumes. <code>ready()</code> always returns <code>false</code> while stopped.</td></tr>
+          <tr><td class="mono">isRunning() const</td><td>Current run state.</td></tr>
+          <tr><td class="mono">remaining() const</td><td>Milliseconds left before the next <code>ready()</code> fires <code>true</code>.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Periodic_Task.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-kw">#include</span> <span class="c-st">&lt;ArduLite.h&gt;</span>
+<span class="c-kw">#include</span> <span class="c-st">&lt;ArduLiteTime.h&gt;</span>
+<span class="c-kw">#include</span> <span class="c-st">&lt;ArduLiteUART.h&gt;</span>
+
+<span class="c-tp">int</span> main() {
+    <span class="c-tp">Digital</span> led(<span class="c-nm">13</span>, OUT);
+    <span class="c-tp">Timer</span> blink(<span class="c-nm">250</span>);    <span class="c-cm">// fast task</span>
+    <span class="c-tp">Timer</span> report(<span class="c-nm">1000</span>);  <span class="c-cm">// slow task, runs independently</span>
+    uart.begin(<span class="c-nm">9600</span>);
+
+    uint16_t blinkCount = <span class="c-nm">0</span>;
+
+    forever() {
+        <span class="c-kw">if</span> (blink.ready())  { led.toggle(); blinkCount++; }
+        <span class="c-kw">if</span> (report.ready()) {
+            uart.send(<span class="c-st">"Uptime "</span>); uart.send(time.seconds());
+            uart.send(<span class="c-st">" seconds, blinks: "</span>); uart.sendLine(blinkCount);
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="stopwatch">
+      <div class="module">
+        <h4>Stopwatch — measures a duration</h4>
+        <table class="api">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td class="mono">start()</td><td>Starts, or resumes after <code>stop()</code>.</td></tr>
+          <tr><td class="mono">stop()</td><td>Pauses. The accumulated duration is kept.</td></tr>
+          <tr><td class="mono">reset()</td><td>Back to zero, stopped.</td></tr>
+          <tr><td class="mono">restart()</td><td><code>reset()</code> then <code>start()</code> in one call.</td></tr>
+          <tr><td class="mono">elapsed() const</td><td>Total duration in milliseconds.</td></tr>
+          <tr><td class="mono">elapsedSeconds() const</td><td>Total duration in whole seconds.</td></tr>
+          <tr><td class="mono">isRunning() const</td><td>Current run state.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Stopwatch.ino (pattern)</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Stopwatch</span> watch;
+watch.start();
+<span class="c-cm">// ... work ...</span>
+watch.stop();
+uart.sendLine(watch.elapsed());   <span class="c-cm">// duration in ms</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= Components ======================= -->
+    <section id="led">
+      <p class="section-kicker">07 · Components Reference</p>
+      <h2>LED</h2>
+      <p class="module-file">src/ArduLiteLED.h</p>
+      <p class="lead-p">A semantic wrapper around <code>Digital</code> for LEDs, with common-anode (active-low) support.</p>
+      <div class="module">
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">LED(pin, activeLow=false)</td><td>Set <code>activeLow=true</code> for common-anode LEDs that light up when the pin is driven LOW.</td></tr>
+          <tr><td class="mono">on() / off() / toggle()</td><td>Standard state control, already accounting for <code>activeLow</code>.</td></tr>
+          <tr><td class="mono">write(bool on)</td><td>Explicit on/off.</td></tr>
+          <tr><td class="mono">isOn() const</td><td>Current logical state (not raw pin level).</td></tr>
+          <tr><td class="mono">blink(uint16_t delayMs, uint16_t count=1)</td><td>Blocking blink, <code>count</code> times, <code>delayMs</code> on and off each cycle.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Component_LED.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">LED</span> led(<span class="c-nm">13</span>);
+led.blink(<span class="c-nm">500</span>, <span class="c-nm">5</span>);   <span class="c-cm">// blink 5 times, 500 ms on/off</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="button">
+      <h2>Button</h2>
+      <p class="module-file">src/ArduLiteButton.h</p>
+      <p class="lead-p">Time-based debounce with edge detection, for a button that connects the pin to GND (active-low) with the internal pull-up enabled automatically.</p>
+      <div class="module">
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Button(pin, debounceMs=50)</td><td>Enables the pull-up automatically at construction.</td></tr>
+          <tr><td class="mono">isPressed()</td><td>True while the button is held, after debounce settles.</td></tr>
+          <tr><td class="mono">pressed()</td><td>True only on the rising edge — the single instant it's first pressed.</td></tr>
+          <tr><td class="mono">released()</td><td>True only on the falling edge — the instant it's first released.</td></tr>
+          <tr><td class="mono">reset()</td><td>Clears stored state back to "not pressed".</td></tr>
+          <tr><td class="mono">setDebounce(uint16_t ms)</td><td>Changes the debounce window.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Component_Button.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Button</span> btn(<span class="c-nm">2</span>);
+
+forever() {
+    <span class="c-kw">if</span> (btn.pressed())   { <span class="c-cm">/* fires exactly once per press */</span> }
+    <span class="c-kw">if</span> (btn.isPressed()) { <span class="c-cm">/* true the whole time it's held  */</span> }
+}</code></pre>
+        </div>
+        <div class="callout">Call <code>pressed()</code>/<code>isPressed()</code>/<code>released()</code> regularly from inside <code>forever()</code> — debounce and edge detection depend on it ticking.</div>
+      </div>
+    </section>
+
+    <section id="relay">
+      <h2>Relay</h2>
+      <p class="module-file">src/ArduLiteRelay.h</p>
+      <p class="lead-p">Controls a relay module, defaulting to active-low (the common wiring on cheap relay boards, where a LOW signal energizes the coil).</p>
+      <div class="module">
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Relay(pin, activeLow=true)</td><td>Set <code>activeLow=false</code> for boards where HIGH energizes the relay.</td></tr>
+          <tr><td class="mono">on() / off() / toggle()</td><td>State control, accounting for <code>activeLow</code>.</td></tr>
+          <tr><td class="mono">write(bool on)</td><td>Explicit on/off.</td></tr>
+          <tr><td class="mono">isOn() const</td><td>Current logical state.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Component_Relay.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Relay</span> lamp(<span class="c-nm">7</span>);   <span class="c-cm">// active-low module, the common case</span>
+lamp.on();
+wait(<span class="c-nm">1000</span>);
+lamp.off();</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="buzzer">
+      <h2>Buzzer</h2>
+      <p class="module-file">src/ArduLiteBuzzer.h</p>
+      <p class="lead-p">Drives an <b>active</b> buzzer — one that sounds continuously when given HIGH, as opposed to a passive buzzer that needs a driven frequency.</p>
+      <div class="module">
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Buzzer(pin)</td><td>Starts silent.</td></tr>
+          <tr><td class="mono">on() / off() / toggle()</td><td>Direct state control.</td></tr>
+          <tr><td class="mono">beep(uint16_t ms)</td><td>Blocking beep for <code>ms</code> milliseconds, then turns off.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Component_Buzzer.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Buzzer</span> buz(<span class="c-nm">8</span>);
+buz.beep(<span class="c-nm">200</span>);   <span class="c-cm">// sounds for 200 ms</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="servo">
+      <h2>Servo</h2>
+      <p class="module-file">src/ArduLiteServo.h</p>
+      <p class="lead-p">Generates a standard 50&nbsp;Hz hobby-servo signal (1.0–2.0&nbsp;ms pulse) via Timer1's Fast PWM mode 14, with zero extra interrupts and zero heap.</p>
+      <div class="module">
+        <div class="badges"><span class="badge warn">Uses Timer1</span></div>
+        <div class="wiring">
+          <div><b>Uno / Nano</b>Pin 9 (OC1A) or 10 (OC1B)</div>
+          <div><b>Mega 2560</b>Pin 11 (OC1A) or 12 (OC1B)</div>
+        </div>
+        <table class="api">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td class="mono">Servo()</td><td>Constructs unattached — no timer activity yet.</td></tr>
+          <tr><td class="mono">attach(pin)</td><td>Binds to a supported OC1 pin and starts the 50&nbsp;Hz frame. Silently does nothing on an unsupported pin. Moves to the middle position automatically.</td></tr>
+          <tr><td class="mono">detach()</td><td>Releases the OC1 output, freeing Timer1 for other modules.</td></tr>
+          <tr><td class="mono">isAttached() const</td><td>Current attach state.</td></tr>
+          <tr><td class="mono">write(uint8_t angle)</td><td>Position, 0-180 degrees.</td></tr>
+          <tr><td class="mono">writeMicroseconds(uint16_t us)</td><td>Direct pulse-width control, clamped to <code>[usMin, usMax]</code>.</td></tr>
+          <tr><td class="mono">setPulseRange(minUs, maxUs)</td><td>Recalibrates the 0°/180° endpoints (default 1000/2000&nbsp;µs) for servos that don't follow the standard range.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Component_Servo.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Servo</span> servo;
+servo.attach(<span class="c-nm">9</span>);
+
+forever() {
+    <span class="c-kw">for</span> (uint8_t ang = <span class="c-nm">0</span>; ang &lt;= <span class="c-nm">180</span>; ang++) { servo.write(ang); wait(<span class="c-nm">15</span>); }
+    <span class="c-kw">for</span> (uint8_t ang = <span class="c-nm">180</span>; ang &gt; <span class="c-nm">0</span>; ang--) { servo.write(ang); wait(<span class="c-nm">15</span>); }
+}</code></pre>
+        </div>
+        <div class="callout">Shares Timer1 with <code>PWM</code> (pins 9/10) and <code>Pulse</code> — don't run all three together.</div>
+      </div>
+    </section>
+
+    <section id="ultrasonic">
+      <h2>Ultrasonic</h2>
+      <p class="module-file">src/ArduLiteUltrasonic.h</p>
+      <p class="lead-p">Driver for the HC-SR04 distance sensor: emits a 10&nbsp;µs trigger pulse, then measures how long the echo line stays HIGH. Distance follows <code>cm = time(µs) / 58</code>.</p>
+      <div class="module">
+        <div class="wiring">
+          <div><b>Trig</b>Digital output pin, e.g. 7</div>
+          <div><b>Echo</b>Digital input pin, e.g. 6</div>
+        </div>
+        <table class="api">
+          <tr><th>Constructor / Method</th><th>Description</th></tr>
+          <tr><td class="mono">Ultrasonic(trigPin, echoPin, timeout=30000)</td><td><code>timeout</code> is the maximum wait for the echo, in microseconds.</td></tr>
+          <tr><td class="mono">distanceCm()</td><td>Blocking measurement. Returns <code>0</code> when there is no reflection within the timeout.</td></tr>
+          <tr><td class="mono">distanceInch()</td><td><code>distanceCm() / 2.54</code>.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Component_Ultrasonic.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Ultrasonic</span> ultra(<span class="c-nm">7</span>, <span class="c-nm">6</span>);   <span class="c-cm">// trig pin 7, echo pin 6</span>
+
+forever() {
+    <span class="c-tp">float</span> cm = ultra.distanceCm();
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= Communication ======================= -->
+    <section id="uart">
+      <p class="section-kicker">08 · Communication Reference</p>
+      <h2>UART</h2>
+      <p class="module-file">src/ArduLiteUART.h</p>
+      <p class="lead-p">Interrupt-driven serial with type-safe overloads for every AVR integer and float type, plus non-blocking line receive via callback. Global instances are ready to use out of the box.</p>
+      <div class="module">
+        <div class="badges"><span class="badge">Global: <code>uart</code></span><span class="badge">Mega 2560: + <code>uart1</code>, <code>uart2</code>, <code>uart3</code></span></div>
+        <table class="api">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td class="mono">begin(baud, callback=nullptr)</td><td>Starts the UART at <code>baud</code>. If <code>callback</code> is given, it fires from the RX interrupt every time a full line (terminated by <code>\r</code> or <code>\n</code>) arrives.</td></tr>
+          <tr><td class="mono">send(...)</td><td>Overloaded for <code>char</code>, <code>const char*</code>, every signed/unsigned integer width, <code>float</code>, and <code>bool</code> (sent as <code>"true"</code>/<code>"false"</code> from PROGMEM).</td></tr>
+          <tr><td class="mono">send(uint32_t data, uint8_t base)</td><td>Sends a number in an arbitrary base, e.g. <code>send(addr, 16)</code> for hex.</td></tr>
+          <tr><td class="mono">sendLine(...)</td><td>Same overload set as <code>send()</code>, followed by <code>\r\n</code>.</td></tr>
+        </table>
+
+        <h4>Blocking-style scan output</h4>
+        <div class="code">
+          <div class="code-head"><span>I2C_Scanner.ino (excerpt)</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code>uart.begin(<span class="c-nm">9600</span>);
+uart.sendLine(<span class="c-st">"I2C Scanner ArduLite"</span>);
+
+<span class="c-kw">if</span> (i2c.probe(addr)) {
+    uart.send(<span class="c-st">"Device found at 0x"</span>);
+    uart.send(addr, <span class="c-nm">16</span>);   <span class="c-cm">// address in hex</span>
+    uart.sendLine(<span class="c-st">""</span>);
+}</code></pre>
+        </div>
+
+        <h4>Interrupt-driven command receiver</h4>
+        <div class="code">
+          <div class="code-head"><span>UART_Interrupt.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-kw">#include</span> <span class="c-st">&lt;ArduLite.h&gt;</span>
+<span class="c-kw">#include</span> <span class="c-st">&lt;ArduLiteLED.h&gt;</span>
+<span class="c-kw">#include</span> <span class="c-st">&lt;ArduLiteUART.h&gt;</span>
+
+<span class="c-tp">LED</span> led(<span class="c-nm">13</span>);
+
+<span class="c-kw">bool</span> strEqual(<span class="c-kw">const</span> <span class="c-tp">char</span> *a, <span class="c-kw">const</span> <span class="c-tp">char</span> *b) {
+    <span class="c-kw">while</span> (*a &amp;&amp; *a == *b) { a++; b++; }
+    <span class="c-kw">return</span> *a == *b;
+}
+
+<span class="c-tp">void</span> onData(<span class="c-kw">const</span> <span class="c-tp">char</span> *line) {   <span class="c-cm">// called from the RX ISR on every full line</span>
+    <span class="c-kw">if</span> (strEqual(line, <span class="c-st">"on"</span>))     led.on();
+    <span class="c-kw">else if</span> (strEqual(line, <span class="c-st">"off"</span>))  led.off();
+    <span class="c-kw">else if</span> (strEqual(line, <span class="c-st">"toggle"</span>)) led.toggle();
+}
+
+<span class="c-tp">int</span> main() {
+    uart.begin(<span class="c-nm">9600</span>, onData);
+    forever() { }   <span class="c-cm">// main loop can stay empty — RX is fully interrupt-driven</span>
+}</code></pre>
+        </div>
+        <div class="callout">The receive callback runs inside an ISR: keep it short, mark shared variables <code>volatile</code>, and never call <code>wait()</code> or send long messages from inside it. The internal line buffer is 16 bytes.</div>
+      </div>
+    </section>
+
+    <section id="i2c">
+      <h2>I2C</h2>
+      <p class="module-file">src/ArduLiteI2C.h</p>
+      <p class="lead-p">Direct TWI (Two-Wire Interface) hardware driver — no software bit-banging. A ready-to-use global instance <code>i2c</code> is provided.</p>
+      <div class="module">
+        <div class="wiring">
+          <div><b>Uno / Nano</b>SDA → A4, SCL → A5</div>
+          <div><b>Mega 2560</b>SDA → 20, SCL → 21</div>
+        </div>
+        <table class="api">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td class="mono">begin()</td><td>Configures TWI hardware at roughly 100&nbsp;kHz (16&nbsp;MHz clock, <code>TWBR=72</code>).</td></tr>
+          <tr><td class="mono">probe(addr)</td><td>Sends SLA+W and checks for an ACK. Returns <code>true</code> if a device answers at that address — the basis of an I2C bus scanner.</td></tr>
+          <tr><td class="mono">read(addr, reg, data*, len)</td><td>Reads <code>len</code> bytes starting at register <code>reg</code> on device <code>addr</code>.</td></tr>
+          <tr><td class="mono">write(addr, reg, data*, len)</td><td>Writes <code>len</code> bytes to register <code>reg</code> on device <code>addr</code>.</td></tr>
+        </table>
+        <p style="font-size:14px;color:var(--ink-soft);">Two free helper functions are also declared alongside <code>i2c</code>: <code class="mono">bcdToDec(uint8_t)</code> and <code class="mono">decToBcd(uint8_t)</code>, handy when talking to RTC modules (e.g. DS1307/DS3231) that store time fields in BCD.</p>
+        <div class="code">
+          <div class="code-head"><span>I2C_Scanner.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code>i2c.begin();
+
+<span class="c-kw">for</span> (uint8_t addr = <span class="c-nm">1</span>; addr &lt; <span class="c-nm">128</span>; addr++) {
+    <span class="c-kw">if</span> (i2c.probe(addr)) {
+        uart.send(<span class="c-st">"Device found at 0x"</span>);
+        uart.send(addr, <span class="c-nm">16</span>);
+        uart.sendLine(<span class="c-st">""</span>);
+    }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="spi">
+      <h2>SPI</h2>
+      <p class="module-file">src/ArduLiteSPI.h</p>
+      <p class="lead-p">Master-mode driver on the AVR's hardware SPI registers (<code>SPCR</code>/<code>SPSR</code>/<code>SPDR</code>). MOSI, SCK and MISO are handled automatically; the chip-select pin is deliberately <b>not</b> managed by this module, so you choose it freely through <code>Digital</code>.</p>
+      <div class="module">
+        <div class="wiring">
+          <div><b>Uno / Nano</b>MOSI 11, MISO 12, SCK 13</div>
+          <div><b>Mega 2560</b>MOSI 51, MISO 50, SCK 52</div>
+        </div>
+        <table class="api">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td class="mono">begin()</td><td>Enables SPI hardware as master, Mode 0, MSB-first, clock <code>F_CPU/16</code>. Safe to call repeatedly.</td></tr>
+          <tr><td class="mono">end()</td><td>Disables the SPI hardware.</td></tr>
+          <tr><td class="mono">transfer(uint8_t data)</td><td>Full-duplex: sends one byte, returns the byte received at the same time.</td></tr>
+          <tr><td class="mono">transfer16(uint16_t data)</td><td>Sends/receives two bytes, high byte first.</td></tr>
+          <tr><td class="mono">setBitOrder(SPI_MSBFIRST / SPI_LSBFIRST)</td><td>Bit transmission order.</td></tr>
+          <tr><td class="mono">setDataMode(SPI_MODE0..3)</td><td>Selects clock polarity/phase.</td></tr>
+          <tr><td class="mono">setClockDivider(2..128)</td><td>Clock speed = <code>F_CPU / divider</code>.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>SPI_Demo.ino (loopback test)</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Digital</span> cs(<span class="c-nm">10</span>, OUT);   <span class="c-cm">// our chosen SS/CS pin, held HIGH</span>
+cs.on();
+spi.begin();
+
+cs.off();                                 <span class="c-cm">// select slave</span>
+uint8_t reply = spi.transfer(<span class="c-nm">0x42</span>);    <span class="c-cm">// send and receive at once</span>
+cs.on();                                  <span class="c-cm">// release slave</span></code></pre>
+        </div>
+        <div class="callout">Master mode is only preserved if the SS pin is held as an output HIGH — <code>begin()</code> does this for you internally, in addition to whatever CS pin you drive yourself.</div>
+      </div>
+    </section>
+
+    <!-- ======================= Interrupts ======================= -->
+    <section id="interrupt">
+      <p class="section-kicker">09 · Interrupts Reference</p>
+      <h2>Interrupt (external)</h2>
+      <p class="module-file">src/ArduLiteInterrupt.h</p>
+      <p class="lead-p">Wraps AVR's two true external-interrupt lines (<code>INT0</code>/<code>INT1</code>), with optional built-in debounce timed off the Timer2 tick.</p>
+      <div class="module">
+        <div class="wiring">
+          <div><b>Uno / Nano</b>INT0 = pin 2, INT1 = pin 3</div>
+          <div><b>Mega 2560</b>INT0 = pin 21, INT1 = pin 20</div>
+        </div>
+        <table class="api">
+          <tr><th>Constructor</th><th>Description</th></tr>
+          <tr><td class="mono">Interrupt(pin, callback, mode)</td><td>No debounce. <code>pin</code> must be an INT0/INT1-capable pin.</td></tr>
+          <tr><td class="mono">Interrupt(pin, callback, mode, debounceDelayMs)</td><td>Same, with a debounce window applied in the ISR itself.</td></tr>
+        </table>
+        <p style="font-size:14px;color:var(--ink-soft);"><code>mode</code> maps to the AVR <code>ISCn</code> bits: <code>0</code> = LOW level, <code>1</code> = any logical CHANGE, <code>2</code> = FALLING edge, <code>3</code> = RISING edge.</p>
+        <div class="code">
+          <div class="code-head"><span>Button_Interrupt.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-kw">volatile</span> uint16_t pressCount = <span class="c-nm">0</span>;
+<span class="c-tp">void</span> onPress() { pressCount++; }
+
+<span class="c-tp">int</span> main() {
+    uart.begin(<span class="c-nm">9600</span>);
+    <span class="c-tp">Interrupt</span> button(<span class="c-nm">2</span>, onPress, <span class="c-nm">3</span>, <span class="c-nm">50</span>);  <span class="c-cm">// pin 2, RISING, 50 ms debounce</span>
+
+    forever() {
+        <span class="c-cm">// pressCount keeps incrementing in the background even while busy</span>
+    }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="pinchange">
+      <h2>PinChange</h2>
+      <p class="module-file">src/ArduLitePinChange.h</p>
+      <p class="lead-p">Pin Change Interrupts fire on almost <i>any</i> digital pin — unlike the two dedicated external-interrupt lines above. Ideal for encoders, flow sensors, and revolution counters.</p>
+      <div class="module">
+        <div class="badges"><span class="badge">Max 4 handlers</span></div>
+        <table class="api">
+          <tr><th>Constructor / Enum</th><th>Description</th></tr>
+          <tr><td class="mono">PinChange(pin, callback, mode=CHANGE)</td><td>Registers one pin and enables the matching <code>PCICR</code>/<code>PCMSK</code> bits automatically.</td></tr>
+          <tr><td class="mono">PinChangeMode::CHANGE</td><td>Fires on every level change, both directions.</td></tr>
+          <tr><td class="mono">PinChangeMode::RISING</td><td>Fires only on LOW→HIGH.</td></tr>
+          <tr><td class="mono">PinChangeMode::FALLING</td><td>Fires only on HIGH→LOW.</td></tr>
+        </table>
+        <div class="wiring">
+          <div><b>Uno / Nano</b>All of D0-D13 and A0-A5</div>
+          <div><b>Mega 2560</b>D6-D9, D10-D13, D14-D15, D50-D53, A8-A15</div>
+        </div>
+        <div class="code">
+          <div class="code-head"><span>Pulse_Counter.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-kw">volatile</span> uint32_t pulses = <span class="c-nm">0</span>;
+<span class="c-tp">void</span> countPulse() { pulses++; }
+
+<span class="c-tp">int</span> main() {
+    <span class="c-tp">PinChange</span> counter(<span class="c-nm">6</span>, countPulse, PinChangeMode::RISING);
+    forever() { <span class="c-cm">/* pulses keeps growing via ISR */</span> }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="timerinterrupt">
+      <h2>TimerInterrupt</h2>
+      <p class="module-file">src/ArduLiteTimerInterrupt.h</p>
+      <p class="lead-p">A scheduler for periodic callbacks that keep their rhythm even while the main loop is busy — the interrupt-driven counterpart to the polling <code>Timer</code> class. Runs on Timer2's <b>COMPB</b> unit, a separate compare channel from the 1&nbsp;ms tick in <code>ArduLiteTime.h</code>, so the two never fight over one vector.</p>
+      <div class="module">
+        <div class="badges"><span class="badge warn">Uses Timer2 COMPB</span><span class="badge">11 bytes RAM / slot</span></div>
+        <table class="api">
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td class="mono">createTimer(intervalMs, callback)</td><td>Registers a periodic task, auto-calling <code>initTimerInterrupt()</code> on first use. Returns a task ID, or <code>TIMER_INVALID</code> if all slots are full.</td></tr>
+          <tr><td class="mono">setTimerEnabled(id, bool)</td><td>Enables/disables a task without removing it.</td></tr>
+          <tr><td class="mono">setTimerInterval(id, newInterval)</td><td>Changes a task's period and restarts its count.</td></tr>
+        </table>
+        <p style="font-size:14px;color:var(--ink-soft);">Slot count defaults to <code>MAX_TIMERS = 4</code>. Define <code>#define MAX_TIMERS 8</code> before including the header to trade RAM for more slots.</p>
+        <div class="code">
+          <div class="code-head"><span>Periodic_Task_Interrupt.ino (pattern)</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">Digital</span> led(<span class="c-nm">13</span>, OUT);
+<span class="c-tp">void</span> blink() { led.toggle(); }
+
+<span class="c-tp">int</span> main() {
+    createTimer(<span class="c-nm">500</span>, blink);   <span class="c-cm">// calls blink() every 500 ms, automatically</span>
+    forever() { }                <span class="c-cm">// free to do other work — blink keeps its rhythm</span>
+}</code></pre>
+        </div>
+        <div class="callout">The callback runs inside an ISR: keep it minimal, mark shared state <code>volatile</code>, and never call <code>wait()</code> or send long UART messages from it.</div>
+      </div>
+    </section>
+
+    <!-- ======================= Storage & Utils ======================= -->
+    <section id="eeprom">
+      <p class="section-kicker">10 · Storage &amp; Utilities</p>
+      <h2>EEPROM</h2>
+      <p class="module-file">src/ArduLiteEEPROM.h</p>
+      <p class="lead-p">A concise wrapper around <code>avr/eeprom.h</code> for data that survives power loss. A ready-to-use global instance <code>eeprom</code> is provided.</p>
+      <div class="module">
+        <div class="wiring">
+          <div><b>ATmega328P</b>1024 bytes (Uno / Nano)</div>
+          <div><b>ATmega2560</b>4096 bytes (Mega)</div>
+        </div>
+        <table class="api">
+          <tr><th>Method</th><th>Description</th></tr>
+          <tr><td class="mono">length() const</td><td>EEPROM size in bytes for the current chip.</td></tr>
+          <tr><td class="mono">readByte / writeByte(addr, value)</td><td>1-byte read/write. <code>writeByte</code> always writes, even if the value is unchanged.</td></tr>
+          <tr><td class="mono">updateByte(addr, value)</td><td>Writes only when the stored value differs — the endurance-friendly choice for values that rarely change.</td></tr>
+          <tr><td class="mono">read/write/updateUInt16(addr, value)</td><td>2-byte access, little-endian.</td></tr>
+          <tr><td class="mono">read/write/updateUInt32(addr, value)</td><td>4-byte access, little-endian.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Persistent_Counter.ino</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-kw">const</span> uint16_t ADDR_COUNT = <span class="c-nm">0</span>;
+
+<span class="c-tp">int</span> main() {
+    uart.begin(<span class="c-nm">9600</span>);
+    uint32_t boots = eeprom.readUInt32(ADDR_COUNT) + <span class="c-nm">1</span>;
+    eeprom.updateUInt32(ADDR_COUNT, boots);   <span class="c-cm">// endurance-friendly write</span>
+
+    uart.send(<span class="c-st">"Powered on "</span>); uart.send(boots); uart.sendLine(<span class="c-st">" times."</span>);
+    forever() { }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="utils">
+      <h2>Utils</h2>
+      <p class="module-file">src/ArduLiteUtils.h / .cpp</p>
+      <p class="lead-p">Bit manipulation, math, pseudo-random numbers, and low-level board-aware pin register helpers — all zero-cost, mostly <code>constexpr</code>.</p>
+      <div class="module">
+        <h4>Bit utilities</h4>
+        <table class="api">
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td class="mono">bitReadFast(value, bit)</td><td><code>constexpr</code>. Returns 1 or 0.</td></tr>
+          <tr><td class="mono">bitSetFast / bitClearFast / bitToggleFast(value&amp;, bit)</td><td>In-place bit set/clear/flip.</td></tr>
+          <tr><td class="mono">bitReverse(uint8_t v)</td><td>Reverses the order of all 8 bits.</td></tr>
+          <tr><td class="mono">bitCount(uint8_t v)</td><td>Population count — number of bits set to 1.</td></tr>
+        </table>
+
+        <h4>Math helpers (templated, <code>constexpr</code>)</h4>
+        <table class="api">
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td class="mono">constrainFast(value, low, high)</td><td>Clamps into <code>[low, high]</code>.</td></tr>
+          <tr><td class="mono">scaleMap(value, inMin, inMax, outMin, outMax)</td><td>Re-scales a value between two ranges — ArduLite's equivalent of Arduino's <code>map()</code>.</td></tr>
+          <tr><td class="mono">minOf(a, b) / maxOf(a, b)</td><td>Generic min/max.</td></tr>
+        </table>
+
+        <h4>Pseudo-random</h4>
+        <table class="api">
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td class="mono">randomSeed(uint32_t seed)</td><td>Seeds the internal LCG state (falls back to <code>1</code> if <code>seed==0</code>).</td></tr>
+          <tr><td class="mono">randomInt(uint16_t max)</td><td>Pseudo-random integer in <code>[0, max)</code>.</td></tr>
+          <tr><td class="mono">randomRange(min, max)</td><td>Pseudo-random integer in <code>[min, max]</code> inclusive.</td></tr>
+        </table>
+
+        <h4>Low-level pin helpers</h4>
+        <p style="font-size:14px;color:var(--ink-soft);">Free functions used internally by <code>Digital</code>, exposed for anyone who wants direct register access without instantiating a class.</p>
+        <table class="api">
+          <tr><th>Function</th><th>Description</th></tr>
+          <tr><td class="mono">pinOutput(pin) / pinInput(pin)</td><td>Sets direction directly.</td></tr>
+          <tr><td class="mono">pinPullup(pin, enable)</td><td>Enables/disables the internal pull-up.</td></tr>
+          <tr><td class="mono">pinWrite(pin, value) / pinRead(pin)</td><td>Direct level write/read.</td></tr>
+          <tr><td class="mono">pinToggle(pin)</td><td>Hardware toggle via the PINx trick.</td></tr>
+          <tr><td class="mono">arduino_lite::pinRegs(pin)</td><td>Returns the raw <code>PinRegs{ ddr, port, pin, mask }</code> struct for a pin — the same lookup <code>Digital</code> uses internally.</td></tr>
+        </table>
+        <div class="code">
+          <div class="code-head"><span>Utils in practice</span><span class="dots"><span></span><span></span><span></span></span></div>
+          <pre><code><span class="c-tp">int</span> raw = sensor.read();                         <span class="c-cm">// 0-1023</span>
+<span class="c-tp">long</span> angle = scaleMap(raw, <span class="c-nm">0</span>, <span class="c-nm">1023</span>, <span class="c-nm">0</span>, <span class="c-nm">180</span>);   <span class="c-cm">// re-scale like Arduino's map()</span>
+angle = constrainFast(angle, <span class="c-nm">0L</span>, <span class="c-nm">180L</span>);
+
+randomSeed(time.micros());
+uint16_t dice = randomRange(<span class="c-nm">1</span>, <span class="c-nm">6</span>);</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= Appendix ======================= -->
+    <section id="boards">
+      <p class="section-kicker">11 · Appendix</p>
+      <h2>Supported boards &amp; pin map</h2>
+      <p class="lead-p">Version 1.x/2.x scope is intentionally three boards. Everything in this document — Digital, PWM, Servo, PinChange, SPI, I2C — auto-selects the correct register set for whichever of these is targeted at compile time.</p>
+      <div class="pinmap">
+        <table class="api">
+          <tr><th>Board</th><th>MCU</th><th>PWM pins</th><th>Hardware serial</th><th>I2C (SDA/SCL)</th><th>SPI (MOSI/MISO/SCK)</th></tr>
+          <tr><td class="mono">Uno</td><td class="mono">ATmega328P</td><td>3, 5, 6, 9, 10, 11</td><td>1 (uart)</td><td>A4 / A5</td><td>11 / 12 / 13</td></tr>
+          <tr><td class="mono">Nano</td><td class="mono">ATmega328P</td><td>3, 5, 6, 9, 10, 11</td><td>1 (uart)</td><td>A4 / A5</td><td>11 / 12 / 13</td></tr>
+          <tr><td class="mono">Mega 2560</td><td class="mono">ATmega2560</td><td>2–13, 44–46</td><td>4 (uart, uart1-3)</td><td>20 / 21</td><td>51 / 50 / 52</td></tr>
+        </table>
+      </div>
+      <div class="callout circuit">Older ATmega8/16/32 targets are also handled inside <code>ArduLiteDigital.h</code> and <code>ArduLiteUtils.h</code> at the register-mapping level (they lack the PINx hardware-toggle feature, so <code>toggle()</code> falls back to read-modify-write) — but they are not part of the officially supported board list in the PRD.</div>
+    </section>
+
+    <section id="comparison">
+      <h2>ArduLite vs. the Arduino Core</h2>
+      <table class="cmp">
+        <tr><th>Task</th><th>Arduino Core</th><th>ArduLite</th></tr>
+        <tr><td>Configure &amp; write a pin</td><td class="arduino">pinMode(13, OUTPUT); digitalWrite(13, HIGH);</td><td class="ardulite">Digital led(13, OUT); led.on();</td></tr>
+        <tr><td>Read a button (active-low)</td><td class="arduino">digitalRead(2) == LOW</td><td class="ardulite">button.pressed()</td></tr>
+        <tr><td>Blocking delay</td><td class="arduino">delay(500);</td><td class="ardulite">wait(500);</td></tr>
+        <tr><td>Running clock</td><td class="arduino">millis()</td><td class="ardulite">time.millis()</td></tr>
+        <tr><td>Non-blocking periodic task</td><td class="arduino">if (millis() - last &gt;= interval) {...}</td><td class="ardulite">if (myTimer.ready()) {...}</td></tr>
+        <tr><td>Re-scale a range</td><td class="arduino">map(v, 0, 1023, 0, 180)</td><td class="ardulite">scaleMap(v, 0, 1023, 0, 180)</td></tr>
+        <tr><td>PWM output</td><td class="arduino">analogWrite(9, 128);</td><td class="ardulite">PWM led(9); led.write(128);</td></tr>
+        <tr><td>Dynamic strings</td><td class="arduino">String s = "x" + String(v); // heap</td><td class="ardulite">Not supported by design — use uart.send() overloads</td></tr>
+      </table>
+      <div class="callout">ArduLite is not a drop-in replacement for the Arduino Core — it's a parallel, non-conflicting vocabulary. Because it never defines Arduino's own symbols, the two can be mixed in one sketch if a project genuinely needs a library that expects <code>Arduino.h</code>.</div>
+    </section>
+
+    <section id="examples">
+      <h2>Examples index</h2>
+      <p class="lead-p">All 21 example sketches ship in <code>examples/</code> and are importable from <i>File → Examples → ArduLite</i>.</p>
+      <div class="ex-grid">
+        <div class="ex-card"><span class="ex-cat">GPIO</span><h4>Led_Blink</h4><p>Minimal Digital output blink.</p></div>
+        <div class="ex-card"><span class="ex-cat">GPIO</span><h4>Led_Toggle_With_Push_Button</h4><p>Digital input with pull-up + toggle.</p></div>
+        <div class="ex-card"><span class="ex-cat">GPIO</span><h4>Led_PWM</h4><p>PWM fade up and down.</p></div>
+        <div class="ex-card"><span class="ex-cat">GPIO</span><h4>Analog_Read_Control_Led_Brightness</h4><p>Analog + PWM brightness control.</p></div>
+        <div class="ex-card"><span class="ex-cat">GPIO</span><h4>Analog_Coding_Test_Speed</h4><p>ADC prescaler speed comparison.</p></div>
+        <div class="ex-card"><span class="ex-cat">GPIO</span><h4>Simple_Pulse_Read</h4><p>Basic Pulse width capture.</p></div>
+        <div class="ex-card"><span class="ex-cat">Timing</span><h4>Simple_Timer_or_Millis</h4><p>Timer class vs. manual millis math.</p></div>
+        <div class="ex-card"><span class="ex-cat">Timing</span><h4>Periodic_Task</h4><p>Two independent Timer-driven tasks.</p></div>
+        <div class="ex-card"><span class="ex-cat">Timing</span><h4>Periodic_Task_Interrupt</h4><p>createTimer() ISR-driven scheduling.</p></div>
+        <div class="ex-card"><span class="ex-cat">Timing</span><h4>Stopwatch</h4><p>Start/stop/elapsed duration measurement.</p></div>
+        <div class="ex-card"><span class="ex-cat">Components</span><h4>Component_LED</h4><p>LED wrapper with blink().</p></div>
+        <div class="ex-card"><span class="ex-cat">Components</span><h4>Component_Button</h4><p>Debounced press/release edges.</p></div>
+        <div class="ex-card"><span class="ex-cat">Components</span><h4>Component_Relay</h4><p>Active-low relay control.</p></div>
+        <div class="ex-card"><span class="ex-cat">Components</span><h4>Component_Buzzer</h4><p>Active buzzer beep().</p></div>
+        <div class="ex-card"><span class="ex-cat">Components</span><h4>Component_Servo</h4><p>0–180° sweep over Timer1.</p></div>
+        <div class="ex-card"><span class="ex-cat">Components</span><h4>Component_Ultrasonic</h4><p>HC-SR04 distance in cm.</p></div>
+        <div class="ex-card"><span class="ex-cat">Comms</span><h4>UART_Interrupt</h4><p>Serial command line receiver.</p></div>
+        <div class="ex-card"><span class="ex-cat">Comms</span><h4>I2C_Scanner</h4><p>Bus scan with probe().</p></div>
+        <div class="ex-card"><span class="ex-cat">Comms</span><h4>SPI_Demo</h4><p>MOSI/MISO loopback self-test.</p></div>
+        <div class="ex-card"><span class="ex-cat">Interrupts</span><h4>Button_Interrupt</h4><p>Debounced INT0 button.</p></div>
+        <div class="ex-card"><span class="ex-cat">Interrupts</span><h4>Pulse_Counter</h4><p>PinChange rising-edge counter.</p></div>
+        <div class="ex-card"><span class="ex-cat">Storage</span><h4>Persistent_Counter</h4><p>Boot counter surviving power loss.</p></div>
+        <div class="ex-card"><span class="ex-cat">Storage</span><h4>Save_Configuration</h4><p>Storing settings in EEPROM.</p></div>
+      </div>
+    </section>
+
+    <section id="rules">
+      <h2>Design rules (project conventions)</h2>
+      <p class="lead-p">ArduLite's internal <code>docs/rules.md</code> spells out the constraints every module in this reference follows — useful context if you're extending the library yourself.</p>
+      <table class="api">
+        <tr><th>Rule</th><th>Detail</th></tr>
+        <tr><td class="mono">C++ standard</td><td>Target C++17. Required: <code>constexpr</code>, <code>inline</code>, <code>enum class</code>, explicit constructors, const-correctness.</td></tr>
+        <tr><td class="mono">Forbidden</td><td>Exceptions, RTTI, virtual inheritance, <code>std::thread</code>, <code>std::filesystem</code>, and any heap allocation (<code>new</code>/<code>delete</code>/<code>malloc</code>/<code>calloc</code>/<code>realloc</code>/<code>free</code>).</td></tr>
+        <tr><td class="mono">Avoid</td><td><code>std::string</code>, <code>std::vector</code> — anything that hides a dynamic allocation.</td></tr>
+        <tr><td class="mono">API readability</td><td><code>Digital led(13); led.on();</code> is the goal, not <code>digitalWrite(13, HIGH);</code>. Every API must read more clearly than the Arduino API it replaces.</td></tr>
+        <tr><td class="mono">Opt-in modules</td><td>No optional module is auto-included in the master header. No peripheral is initialized unless the sketch actually uses it.</td></tr>
+        <tr><td class="mono">Naming</td><td>Classes: PascalCase. Variables and methods: camelCase.</td></tr>
+      </table>
+    </section>
+
+    <section id="license">
+      <h2>License &amp; authorship</h2>
+      <p class="lead-p">ArduLite is released under the <b>MIT License</b>, © 2025 Ajang Rahmat.</p>
+      <p>Created by <b>Ajang Rahmat</b> — Robot Class, PT AViSha Inovasi Indonesia.<br>
+      Source: <a href="https://github.com/ArduLite/ArduLite" target="_blank" rel="noopener">github.com/ArduLite/ArduLite</a></p>
+      <div class="callout">Contributions are welcome — fork the repository and submit a pull request. New modules should follow the conventions in the <a href="#rules">Design rules</a> section above: no heap, opt-in headers, and an API that reads more clearly than the Arduino equivalent it replaces.</div>
+    </section>
+
+    <section id="faq">
+      <p class="section-kicker">12 · For Beginners</p>
+      <h2>Frequently asked questions</h2>
+      <p class="lead-p">New to Arduino or embedded C++? Start here.</p>
+
+      <div class="module">
+        <h4>What is ArduLite, in plain terms?</h4>
+        <p>It's a free library that lets you control an Arduino board with short, readable code like <code>led.on()</code> instead of the longer <code>digitalWrite(13, HIGH)</code> style — while producing code that is just as fast (often faster) than writing the registers by hand yourself.</p>
+
+        <h4>Do I need to know what a "register" is to use it?</h4>
+        <p>No. You can build complete projects — blink an LED, read a button, sweep a servo — using only the object methods shown in this reference, exactly like the Quick Start examples above. The register-level explanations in <a href="#zero-overhead">Zero-Overhead Model</a> are optional background reading for when you're curious how it works under the hood.</p>
+
+        <h4>Which Arduino board should I use with ArduLite?</h4>
+        <p>Any Arduino <b>Uno</b> or <b>Nano</b> is the easiest starting point — they're the cheapest, most common boards and every example in this documentation works on them unmodified. Use a <b>Mega 2560</b> only if your project needs more pins or more than one hardware serial port.</p>
+
+        <h4>How is this different from just using the normal Arduino language?</h4>
+        <p>You don't have to choose — see the <a href="#comparison">ArduLite vs. Arduino Core</a> table. ArduLite never redefines Arduino's own functions, so you can use both in the same sketch if a library you need still expects the standard Arduino API.</p>
+
+        <h4>I'm stuck — where do I start?</h4>
+        <p>Read <a href="#install">Installation</a>, copy the first example from <a href="#quickstart">Quick Start</a> exactly as written, upload it, and confirm the LED blinks before changing anything. Then open <a href="#examples">Examples Index</a> and pick the next one closest to what you want to build.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  ArduLite Documentation · v2.0.0 · Generated for offline / local viewing · MIT License
+</footer>
+
+<script>
+  // Active-link highlighting while scrolling
+  const links = Array.from(document.querySelectorAll('.sidebar a[href^="#"]'));
+  const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+  function onScroll(){
+    let current = sections[0];
+    const y = window.scrollY + 100;
+    for(const s of sections){ if(s.offsetTop <= y) current = s; }
+    links.forEach(l => l.classList.toggle('active', current && l.getAttribute('href') === '#'+current.id));
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+</script>
 </body>
 </html>
